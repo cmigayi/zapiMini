@@ -1,0 +1,176 @@
+package com.example.zapimini;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import com.example.zapimini.commons.AddItemDialog;
+import com.example.zapimini.commons.DateTimeUtils;
+import com.example.zapimini.commons.MoneyUtils;
+import com.example.zapimini.data.User;
+import com.example.zapimini.databinding.ActivityHomeBinding;
+import com.example.zapimini.localDatabases.IncomeLocalDb;
+import com.example.zapimini.localStorage.UserLocalStorage;
+import com.example.zapimini.presenters.HomeActivityPresenter;
+import com.example.zapimini.views.HomeActivityView;
+
+public class HomeActivity extends AppCompatActivity
+        implements HomeActivityView, View.OnClickListener {
+    ActivityHomeBinding activityHomeBinding;
+    static Activity aHome;
+
+    Intent intent;
+    UserLocalStorage userLocalStorage;
+    User user;
+
+    HomeActivityPresenter presenter;
+    Thread thread;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        activityHomeBinding = DataBindingUtil.setContentView(this, R.layout.activity_home);
+
+        Toolbar toolbar = findViewById(R.id.tool_bar);
+        toolbar.setTitle("Zapi-Mini");
+        setSupportActionBar(toolbar);
+
+        aHome = this;
+
+        userLocalStorage = new UserLocalStorage(this);
+        authUser(userLocalStorage);
+        user = userLocalStorage.getLoggedInUser();
+
+        IncomeLocalDb incomeLocalDb = new IncomeLocalDb(this);
+        HomeActivityPresenter presenter = new HomeActivityPresenter(incomeLocalDb, this);
+
+        activityHomeBinding.fab.setOnClickListener(this);
+        activityHomeBinding.closeDayBtn.setOnClickListener(this);
+        activityHomeBinding.cardview3.setOnClickListener(this);
+        activityHomeBinding.cardview4.setOnClickListener(this);
+
+        thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    while(!thread.isInterrupted()){
+                        Thread.sleep(1000);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                presenter.loadIncome(user.getId(), new DateTimeUtils().getTodayDate());
+                                presenter.loadOverallNetIncome(user.getId());
+                            }
+                        });
+                    }
+                }catch(InterruptedException e){}
+            }
+        });
+        thread.start();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        switch(id){
+            case R.id.reports:
+                intent = new Intent(HomeActivity.this, ReportsActivity.class);
+                intent.putExtra("activity", "Home");
+                startActivity(intent);
+                break;
+            case R.id.profile:
+                intent = new Intent(HomeActivity.this, ProfileActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.business:
+                intent = new Intent(HomeActivity.this, BusinessProfileActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.settings:
+                intent = new Intent(HomeActivity.this, SettingsActivity.class);
+                startActivity(intent);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.fab:
+                String[] addItemOptions = {
+                        "Expense",
+//                        "Credit"
+                };
+                AddItemDialog addItemDialog = new AddItemDialog(addItemOptions);
+                addItemDialog.show(getSupportFragmentManager(), "dialog");
+                break;
+            case R.id.cardview3:
+                intent = new Intent(HomeActivity.this, IncomeReportActivity.class);
+                intent.putExtra("date", new DateTimeUtils().getTodayDate());
+                intent.putExtra("activity", "Home");
+                startActivity(intent);
+                break;
+            case R.id.cardview4:
+                intent = new Intent(HomeActivity.this, IncomeReportActivity.class);
+                //intent.putExtra("all", new DateTimeUtils().getTodayDate());
+                intent.putExtra("activity", "Home");
+                startActivity(intent);
+                break;
+            case R.id.close_day_btn:
+                intent = new Intent(HomeActivity.this, CashUpActivity.class);
+                startActivity(intent);
+                break;
+        }
+    }
+
+    @Override
+    public void authUser(UserLocalStorage userLocalStorage) {
+        if(!userLocalStorage.isUserLogged()){
+            intent = new Intent(HomeActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void updateExpenseMade(double amount) {
+        activityHomeBinding.expenseMade.setText(new MoneyUtils().AddMoneyFormat(amount));
+    }
+
+    @Override
+    public void updateOverallNetIncome(double amount) {
+        if(amount < 1){
+            activityHomeBinding.netIncomeMade.setTextColor(Color.parseColor("#ff0000"));
+        }
+        activityHomeBinding.netIncomeMade.setText(new MoneyUtils().AddMoneyFormat(amount));
+    }
+
+    @Override
+    public void updateNetAmount(double amount) {
+        activityHomeBinding.netAmount.setText(new MoneyUtils().AddMoneyFormat(amount));
+    }
+
+    @Override
+    public void updateGrossAmount(double amount) {
+        activityHomeBinding.grossAmount.setText(new MoneyUtils().AddMoneyFormat(amount));
+    }
+
+    @Override
+    public void displayError(String message) {
+
+    }
+}

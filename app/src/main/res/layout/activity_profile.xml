@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="user"
+            type="com.example.zapimini.data.User" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+
+        <include android:id="@+id/tool_bar" layout="@layout/tool_bar"/>
+
+        <TextView
+            android:id="@+id/error_tv"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#e52421"
+            android:padding="10dp"/>
+
+        <TextView
+            android:id="@+id/success_tv"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#56b668"
+            android:padding="10dp"/>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="300dp"
+            android:minWidth="300dp"
+            android:layout_gravity="center"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/contraint1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                tools:context=".ProfileActivity">
+
+                <TextView
+                    android:id="@+id/created"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="17sp"
+                    android:text="@{`Create: `+user.dateTime}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"/>
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#bfbfbf"
+                    app:layout_constraintTop_toBottomOf="@+id/created"
+                    app:layout_constraintLeft_toLeftOf="parent"/>
+
+                <TextView
+                    android:id="@+id/username_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textSize="17sp"
+                    android:text="Username:"
+                    app:layout_constraintTop_toBottomOf="@+id/view1"
+                    app:layout_constraintLeft_toLeftOf="parent"/>
+
+                <EditText
+                    android:id="@+id/username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_edit_text"
+                    android:padding="5dp"
+                    android:focusable="false"
+                    android:textSize="17sp"
+                    android:text="@{user.username}"
+                    app:layout_constraintTop_toBottomOf="@+id/username_tv"
+                    app:layout_constraintLeft_toLeftOf="parent"/>
+
+                <Button
+                    android:id="@+id/update_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/bg_button"
+                    android:textColor="#ffffff"
+                    android:text="Update"
+                    app:layout_constraintTop_toBottomOf="@id/username"
+                    app:layout_constraintRight_toRightOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</layout>

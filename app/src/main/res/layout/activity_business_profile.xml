@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="business"
+            type="com.example.zapimini.data.Business" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+
+        <include android:id="@+id/tool_bar" layout="@layout/tool_bar"/>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="300dp"
+            android:minWidth="300dp"
+            android:layout_gravity="center"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/contraint1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                tools:context=".ProfileActivity">
+
+                <TextView
+                    android:id="@+id/name_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textSize="17sp"
+                    android:text="Business name:"
+                    app:layout_constraintTop_toBottomOf="@+id/view1"
+                    app:layout_constraintLeft_toLeftOf="parent"/>
+
+                <EditText
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_edit_text"
+                    android:padding="5dp"
+                    android:focusable="false"
+                    android:textSize="17sp"
+                    android:text="@{business.name}"
+                    app:layout_constraintTop_toBottomOf="@+id/name_tv"
+                    app:layout_constraintLeft_toLeftOf="parent"/>
+
+                <TextView
+                    android:id="@+id/currency_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textSize="17sp"
+                    android:text="Currency:"
+                    app:layout_constraintTop_toBottomOf="@+id/name"
+                    app:layout_constraintLeft_toLeftOf="parent"/>
+
+                <EditText
+                    android:id="@+id/currency"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_edit_text"
+                    android:padding="5dp"
+                    android:focusable="false"
+                    android:textSize="17sp"
+                    android:text="@{business.currency}"
+                    app:layout_constraintTop_toBottomOf="@+id/currency_tv"
+                    app:layout_constraintLeft_toLeftOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</layout>

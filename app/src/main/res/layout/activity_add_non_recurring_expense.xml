@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:background="#f1f1f2"
+        tools:context=".AddNonRecurringExpenseActivity">
+
+        <include android:id="@+id/tool_bar" layout="@layout/tool_bar"/>
+
+        <TextView
+            android:id="@+id/page_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="#e7e7e7"
+            android:text="Today"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="#757575"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#d2d2d2"/>
+
+        <TextView
+            android:id="@+id/error_tv"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#e52421"
+            android:padding="10dp"/>
+
+        <TextView
+            android:id="@+id/success_tv"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#56b668"
+            android:padding="10dp"/>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="300dp"
+            android:minWidth="300dp"
+            android:layout_gravity="center"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/contraint1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/item_name_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:textStyle="bold"
+                android:textSize="17sp"
+                android:text="Item name:"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <EditText
+                android:id="@+id/item_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:inputType="textCapWords"
+                android:hint="Item name"
+                android:background="@drawable/bg_write_edit_text"
+                app:layout_constraintTop_toBottomOf="@id/item_name_title"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <TextView
+                android:id="@+id/amount_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:textStyle="bold"
+                android:textSize="17sp"
+                android:text="Amount:"
+                app:layout_constraintTop_toBottomOf="@id/item_name"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <EditText
+                android:id="@+id/amount_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:hint="Amount"
+                android:inputType="numberDecimal"
+                android:background="@drawable/bg_amount_edit_text"
+                app:layout_constraintTop_toBottomOf="@id/amount_tv"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <Button
+                android:id="@+id/submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/bg_button"
+                android:textColor="#ffffff"
+                android:text="Submit"
+                app:layout_constraintTop_toBottomOf="@id/amount_value"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</layout>

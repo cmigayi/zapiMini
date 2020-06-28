@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.zapimini">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher_round"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".CreditItemReportConfirmationActivity"></activity>
+        <activity android:name=".CreditItemReportActivity" />
+        <activity android:name=".CreditsReportActivity" />
+        <activity android:name=".AddCreditConfirmationActivity" />
+        <activity android:name=".AddCreditActivity" />
+        <activity android:name=".ProfileActivity" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings" />
+        <activity android:name=".ReportsActivity" />
+        <activity android:name=".BusinessProfileActivity" />
+        <activity android:name=".BankReportActivity" />
+        <activity android:name=".BankItemReportActivity" />
+        <activity android:name=".BankItemReportConfirmationActivity" />
+        <activity android:name=".AddBankTransactionActivity" />
+        <activity android:name=".AddNonRecurringExpenseActivity" />
+        <activity android:name=".AddNonRecurringExpenseConfirmationActivity" />
+        <activity android:name=".ExpensesReportActivity" />
+        <activity android:name=".ExpenseItemReportActivity" />
+        <activity android:name=".ExpenseItemReportConfirmationActivity" />
+        <activity android:name=".ConfirmationActivity" />
+        <activity android:name=".IncomeConfirmationActivity" />
+        <activity android:name=".IncomeReportActivity" />
+        <activity android:name=".CashUpActivity" />
+        <activity android:name=".CreateBusinessActivity" />
+        <activity android:name=".CreateAccountActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".HomeActivity" />
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.zapimini.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+    </application>
+
+</manifest>
