@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CreditItemReportConfirmationActivity"></activity>
+        <activity android:name=".CashUpConfirmationActivity"></activity>
+        <activity android:name=".CashUpsReportActivity" />
+        <activity android:name=".CreditItemReportConfirmationActivity" />
         <activity android:name=".CreditItemReportActivity" />
         <activity android:name=".CreditsReportActivity" />
         <activity android:name=".AddCreditConfirmationActivity" />

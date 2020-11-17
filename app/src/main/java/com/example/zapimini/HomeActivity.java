@@ -52,8 +52,8 @@ public class HomeActivity extends AppCompatActivity
         IncomeLocalDb incomeLocalDb = new IncomeLocalDb(this);
         HomeActivityPresenter presenter = new HomeActivityPresenter(incomeLocalDb, this);
 
-        activityHomeBinding.fab.setOnClickListener(this);
-        activityHomeBinding.closeDayBtn.setOnClickListener(this);
+        activityHomeBinding.addItemBtn.setOnClickListener(this);
+        activityHomeBinding.cashUpBtn.setOnClickListener(this);
         activityHomeBinding.cardview3.setOnClickListener(this);
         activityHomeBinding.cardview4.setOnClickListener(this);
 
@@ -111,7 +111,7 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public void onClick(View v) {
         switch(v.getId()){
-            case R.id.fab:
+            case R.id.add_item_btn:
                 String[] addItemOptions = {
                         "Expense",
 //                        "Credit"
@@ -131,7 +131,7 @@ public class HomeActivity extends AppCompatActivity
                 intent.putExtra("activity", "Home");
                 startActivity(intent);
                 break;
-            case R.id.close_day_btn:
+            case R.id.cash_up_btn:
                 intent = new Intent(HomeActivity.this, CashUpActivity.class);
                 startActivity(intent);
                 break;

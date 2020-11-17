@@ -86,7 +86,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"/>
 
             <EditText
-                android:id="@+id/amount_value"
+                android:id="@+id/amount_entered"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
@@ -104,7 +104,7 @@
                 android:background="@drawable/bg_button"
                 android:textColor="#ffffff"
                 android:text="Submit"
-                app:layout_constraintTop_toBottomOf="@id/amount_value"
+                app:layout_constraintTop_toBottomOf="@id/amount_entered"
                 app:layout_constraintRight_toRightOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

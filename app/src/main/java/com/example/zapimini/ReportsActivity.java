@@ -102,9 +102,9 @@ public class ReportsActivity extends AppCompatActivity implements CustomReportAd
     private void reportActivities(int position){
         switch(position){
             case 0:
-//                intent = new Intent(ReportsActivity.this, RoutesReportActivity.class);
-//                startActivity(intent);
-                Toast.makeText(getApplicationContext(),"Coming soon!",Toast.LENGTH_SHORT).show();
+                intent = new Intent(ReportsActivity.this, CashUpsReportActivity.class);
+                intent.putExtra("activity", "Reports");
+                startActivity(intent);
                 break;
             case 1:
                 intent = new Intent(ReportsActivity.this, ExpensesReportActivity.class);

@@ -15,9 +15,12 @@ import android.widget.ProgressBar;
 
 import com.example.zapimini.commons.DateTimeUtils;
 import com.example.zapimini.commons.IncomeCalculation;
+import com.example.zapimini.commons.MoneyUtils;
+import com.example.zapimini.data.CashUp;
 import com.example.zapimini.data.Income;
 import com.example.zapimini.data.User;
 import com.example.zapimini.databinding.ActivityCashUpBinding;
+import com.example.zapimini.localDatabases.CashUpLocalDb;
 import com.example.zapimini.localDatabases.IncomeLocalDb;
 import com.example.zapimini.localStorage.UserLocalStorage;
 import com.example.zapimini.presenters.CashUpActivityPresenter;
@@ -27,7 +30,7 @@ public class CashUpActivity extends AppCompatActivity
         implements CashUpActivityView, View.OnClickListener {
     final static String mCreateIncomeActivity = "CashUpActivity";
     ActivityCashUpBinding activityCashUpBinding;
-    double expense, gross;
+    double expense, amountEntered;
     UserLocalStorage userLocalStorage;
 
     Intent intent;
@@ -52,7 +55,7 @@ public class CashUpActivity extends AppCompatActivity
         userLocalStorage = new UserLocalStorage(this);
 
         IncomeLocalDb incomeLocalDb = new IncomeLocalDb(this);
-        presenter = new CashUpActivityPresenter(incomeLocalDb, this);
+        presenter = new CashUpActivityPresenter(incomeLocalDb, new CashUpLocalDb(this), this);
 
         activityCashUpBinding.createBtn.setOnClickListener(this);
     }
@@ -90,10 +93,17 @@ public class CashUpActivity extends AppCompatActivity
 
                     Income income = new Income();
                     income.setUserId(user.getId());
-                    income.setGrossAmount(gross);
-                    income.setNetAmount(new IncomeCalculation().getNetIncome(gross, expense));
+                    income.setGrossAmount(amountEntered);
+                    income.setNetAmount(new IncomeCalculation().getNetIncome(amountEntered, expense));
                     income.setDateTime(new DateTimeUtils().getTodayDateTime());
-                    presenter.cashUp(income);
+
+                    CashUp cashUp = new CashUp();
+                    cashUp.setUserId(user.getId());
+                    cashUp.setAmount(amountEntered);
+                    cashUp.setDateTime(new DateTimeUtils().getTodayDateTime());
+                    presenter.cashUp(income, cashUp);
+                }else{
+                    displayError("Your input is invalid!");
                 }
                 break;
         }
@@ -117,29 +127,29 @@ public class CashUpActivity extends AppCompatActivity
     @Override
     public boolean validateInputs() {
         boolean validated = false;
-        if(activityCashUpBinding.amountValue.getText().toString().equals("")){
+        if(activityCashUpBinding.amountEntered.getText().toString().equals("")){
             displayError("Amount is invalid!");
         }else {
-            gross = Double.parseDouble(
-                    activityCashUpBinding.amountValue.getText().toString());
+            amountEntered = Double.parseDouble(
+                    activityCashUpBinding.amountEntered.getText().toString());
             validated = true;
         }
         return validated;
     }
 
     @Override
-    public void createdIncome(Income income) {
+    public void createdCashUp(CashUp cashUp) {
         Log.d(mCreateIncomeActivity, "Create cash: done");
 
         activityCashUpBinding.contraint1.setVisibility(View.VISIBLE);
         activityCashUpBinding.progressBar.setVisibility(View.GONE);
         try{
             Log.d(mCreateIncomeActivity, "Done");
+            String amountFormatted = new MoneyUtils().AddMoneyFormat(cashUp.getAmount());
             intent = new Intent(CashUpActivity.this,
-                    IncomeConfirmationActivity.class);
-            intent.putExtra("message", "You have added the following income to income reports successfully!");
-            intent.putExtra("message_2", "Gross: "+income.getGrossAmount()+
-                    ", Expense: ksh."+income.getTotalExpense()+", Net: "+income.getNetAmount());
+                    CashUpConfirmationActivity.class);
+            intent.putExtra("message", "You have added the following to cash up reports successfully!");
+            intent.putExtra("message_2", "Amount added: "+amountFormatted);
             startActivity(intent);
             finish();
         }catch(Exception e){
