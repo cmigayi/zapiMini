@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:text="Posts:"
-                    android:textColor="#8d694d"
+                    android:textColor="@color/blackColor"
                     android:textSize="18sp"
                     app:layout_constraintTop_toBottomOf="@+id/cardview1"
                     app:layout_constraintLeft_toLeftOf="parent"/>

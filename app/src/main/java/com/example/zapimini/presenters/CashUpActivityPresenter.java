@@ -28,21 +28,21 @@ public class CashUpActivityPresenter {
     }
 
     public void cashUp(Income incomeFromUser, CashUp cashUp){
-        String date = new DateTimeUtils().removeTimeInDateTime(incomeFromUser.getDateTime());
         cashUpRepository.createCashUp(cashUp, new CashUpRepository.OnFinishedListerner() {
             @Override
             public void onFinished(List<CashUp> cashUpList) {
-                AppExecutors.getInstance().mainThread().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        try{
-                            Log.d(mCashUpActivityPresenter, "Response: "+cashUpList.get(0).getAmount());
-                            view.createdCashUp(cashUpList.get(0));
-                        }catch(Exception e){
-                            Log.d(mCashUpActivityPresenter, "Error: "+e.getMessage());
-                        }
-                    }
-                });
+                getUserIncome(incomeFromUser, cashUpList.get(0));
+//                AppExecutors.getInstance().mainThread().execute(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        try{
+//                            Log.d(mCashUpActivityPresenter, "Response: "+cashUpList.get(0).getAmount());
+//                            view.createdCashUp(cashUpList.get(0));
+//                        }catch(Exception e){
+//                            Log.d(mCashUpActivityPresenter, "Error: "+e.getMessage());
+//                        }
+//                    }
+//                });
             }
 
             @Override
@@ -61,54 +61,56 @@ public class CashUpActivityPresenter {
                 });
             }
         });
-
-
-//        repository.getIncomeByUserIdByDate(incomeFromUser.getUserId(), date, new IncomeRepository.OnFinishedListerner() {
-//            @Override
-//            public void onFinished(List<Income> incomelist) {
-//                double grossAmount = 0.0;
-//                if(incomelist.size() > 0){
-//                    // Update
-//                    Income incomeFromDb = incomelist.get(0);
-//                    grossAmount = incomeFromDb.getGrossAmount() + incomeFromUser.getGrossAmount();
-//                    double netAmount = grossAmount - incomeFromDb.getTotalExpense();
-//                    incomeFromDb.setNetAmount(netAmount);
-//                    incomeFromDb.setGrossAmount(grossAmount);
-//                    updateIncome(incomeFromDb);
-//                }else {
-//                    // create
-//                    Income income = new Income(
-//                            0,
-//                            incomeFromUser.getUserId(),
-//                            incomeFromUser.getBusinessId(),
-//                            incomeFromUser.getGrossAmount(),
-//                            0.0,
-//                            incomeFromUser.getGrossAmount(),
-//                            new DateTimeUtils().getTodayDateTime()
-//                    );
-//                    createIncome(income);
-//                }
-//            }
-//
-//            @Override
-//            public void onFinished(Object object) {
-//
-//            }
-//
-//            @Override
-//            public void onFailuire(Throwable t) {
-//                Log.d(mCashUpActivityPresenter, "Error: "+t.getMessage());
-//                AppExecutors.getInstance().mainThread().execute(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        view.displayError("Sorry, user was not created.");
-//                    }
-//                });
-//            }
-//        });
     }
 
-    private void updateIncome(Income income){
+    private void getUserIncome(Income incomeFromUser, CashUp cashUp){
+        String date = new DateTimeUtils().removeTimeInDateTime(incomeFromUser.getDateTime());
+        repository.getIncomeByUserIdByDate(incomeFromUser.getUserId(), date, new IncomeRepository.OnFinishedListerner() {
+            @Override
+            public void onFinished(List<Income> incomelist) {
+                double grossAmount = 0.0;
+                if(incomelist.size() > 0){
+                    // Update
+                    Income incomeFromDb = incomelist.get(0);
+                    grossAmount = incomeFromDb.getGrossAmount() + incomeFromUser.getGrossAmount();
+                    double netAmount = grossAmount - incomeFromDb.getTotalExpense();
+                    incomeFromDb.setNetAmount(netAmount);
+                    incomeFromDb.setGrossAmount(grossAmount);
+                    updateIncome(incomeFromDb, cashUp);
+                }else {
+                    // create
+                    Income income = new Income(
+                            0,
+                            incomeFromUser.getUserId(),
+                            incomeFromUser.getBusinessId(),
+                            incomeFromUser.getGrossAmount(),
+                            0.0,
+                            incomeFromUser.getGrossAmount(),
+                            new DateTimeUtils().getTodayDateTime()
+                    );
+                    createIncome(income, cashUp);
+                }
+            }
+
+            @Override
+            public void onFinished(Object object) {
+
+            }
+
+            @Override
+            public void onFailuire(Throwable t) {
+                Log.d(mCashUpActivityPresenter, "Error: "+t.getMessage());
+                AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        view.displayError("Sorry, user was not created.");
+                    }
+                });
+            }
+        });
+    }
+
+    private void updateIncome(Income income, CashUp cashUp){
         repository.updateIncome(income, new IncomeRepository.OnFinishedListerner() {
             @Override
             public void onFinished(List<Income> incomelist) {
@@ -122,7 +124,7 @@ public class CashUpActivityPresenter {
                     public void run() {
                         try{
                             Log.d(mCashUpActivityPresenter, "Response: "+response);
-                           // view.createdIncome(income);
+                            view.createdCashUp(cashUp);
                         }catch(Exception e){
                             Log.d(mCashUpActivityPresenter, "Error: "+e.getMessage());
                         }
@@ -137,7 +139,7 @@ public class CashUpActivityPresenter {
         });
     }
 
-    public void createIncome(Income income){
+    public void createIncome(Income income, CashUp cashUp){
         repository.createIncome(income, new IncomeRepository.OnFinishedListerner() {
             @Override
             public void onFinished(List<Income> incomelist) {
@@ -150,7 +152,7 @@ public class CashUpActivityPresenter {
                             public void run() {
                                 try{
                                     Log.d(mCashUpActivityPresenter, "Response: "+incomelist);
-                                    //view.createdIncome(incomelist.get(0));
+                                    view.createdCashUp(cashUp);
                                 }catch(Exception e){
                                     Log.d(mCashUpActivityPresenter, "Error: "+e.getMessage());
                                 }

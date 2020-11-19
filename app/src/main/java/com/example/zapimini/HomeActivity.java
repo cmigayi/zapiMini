@@ -1,9 +1,11 @@
 package com.example.zapimini;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -34,13 +36,15 @@ public class HomeActivity extends AppCompatActivity
     HomeActivityPresenter presenter;
     Thread thread;
 
+    public ActionBarDrawerToggle actionBarDrawerToggle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityHomeBinding = DataBindingUtil.setContentView(this, R.layout.activity_home);
 
         Toolbar toolbar = findViewById(R.id.tool_bar);
-        toolbar.setTitle("Zapi-Mini");
+        toolbar.setTitle("ZapiMini");
         setSupportActionBar(toolbar);
 
         aHome = this;
@@ -50,7 +54,21 @@ public class HomeActivity extends AppCompatActivity
         user = userLocalStorage.getLoggedInUser();
 
         IncomeLocalDb incomeLocalDb = new IncomeLocalDb(this);
-        HomeActivityPresenter presenter = new HomeActivityPresenter(incomeLocalDb, this);
+
+        // drawer layout instance to toggle the menu icon to open
+        // drawer and back button to close drawer
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this,
+                activityHomeBinding.drawerLayout, R.string.nav_open, R.string.nav_close);
+
+        // pass the Open and Close toggle for the drawer layout listener
+        // to toggle the button
+        activityHomeBinding.drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+
+        // to make the Navigation drawer icon always appear on the action bar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        presenter = new HomeActivityPresenter(incomeLocalDb, this);
 
         activityHomeBinding.addItemBtn.setOnClickListener(this);
         activityHomeBinding.cashUpBtn.setOnClickListener(this);

@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.example.zapimini.adapters.CustomIncomeReportAdapter;
+import com.example.zapimini.commons.CashUpCalculation;
 import com.example.zapimini.commons.DatePickerFragment;
 import com.example.zapimini.commons.DateTimeUtils;
 import com.example.zapimini.commons.ExportDocumentsUtils;
@@ -151,10 +152,11 @@ public class IncomeReportActivity extends AppCompatActivity implements
     public void displayIncomelist(String filter, List<Income> incomelist) {
         if(incomelist.size() > 0) {
             incomelist2 = incomelist;
-            String amount = new MoneyUtils().AddMoneyFormat(
+            String amountFormatted = new MoneyUtils().AddMoneyFormat(
                     new IncomeCalculation().getTotalNetAmount(incomelist));
             toolbar.setTitle("Income: ("+incomelist.size()+ " entries)");
-            activityIncomeReportBinding.pageTitle.setText(filter+" | Net total: ksh."+amount);
+            activityIncomeReportBinding.pageTitle.setText(filter);
+            activityIncomeReportBinding.amountTv.setText(amountFormatted);
             activityIncomeReportBinding.recyclerView.setHasFixedSize(true);
             // use a linear layout manager
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);

@@ -154,7 +154,8 @@ public class ExpensesReportActivity extends AppCompatActivity implements
             String amount = new MoneyUtils().AddMoneyFormat(
                     new ExpenseCalculation().getTotalExpenseAmount(expenselist));
             toolbar.setTitle("Expenses: ("+expenselist.size()+ " entries)");
-            activityExpensesReportBinding.pageTitle.setText(filter+" | Amount: ksh."+amount);
+            activityExpensesReportBinding.pageTitle.setText(filter);
+            activityExpensesReportBinding.amountTv.setText(amount);
             activityExpensesReportBinding.recyclerView.setHasFixedSize(true);
             // use a linear layout manager
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);

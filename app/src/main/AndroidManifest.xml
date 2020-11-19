@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CashUpConfirmationActivity"></activity>
+
+        <activity android:name=".CashUpConfirmationActivity" />
         <activity android:name=".CashUpsReportActivity" />
         <activity android:name=".CreditItemReportConfirmationActivity" />
         <activity android:name=".CreditItemReportActivity" />
@@ -59,6 +60,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+
     </application>
 
 </manifest>

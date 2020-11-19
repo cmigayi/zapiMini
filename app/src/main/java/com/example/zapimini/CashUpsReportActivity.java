@@ -62,7 +62,7 @@ public class CashUpsReportActivity extends AppCompatActivity implements
         aCashUpsReportActivity = this;
 
         toolbar = findViewById(R.id.tool_bar);
-        toolbar.setTitle("CashUps: ");
+        toolbar.setTitle("Cash ups: ");
         setSupportActionBar(toolbar);
 
         // add back arrow to toolbar

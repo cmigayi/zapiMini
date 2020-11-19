@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,7 +34,7 @@ public class CashUpActivity extends AppCompatActivity
     double expense, amountEntered;
     UserLocalStorage userLocalStorage;
 
-    Intent intent;
+    Intent intent, broadcastIntent;
     CashUpActivityPresenter presenter;
 
     @Override
@@ -143,6 +144,7 @@ public class CashUpActivity extends AppCompatActivity
 
         activityCashUpBinding.contraint1.setVisibility(View.VISIBLE);
         activityCashUpBinding.progressBar.setVisibility(View.GONE);
+
         try{
             Log.d(mCreateIncomeActivity, "Done");
             String amountFormatted = new MoneyUtils().AddMoneyFormat(cashUp.getAmount());

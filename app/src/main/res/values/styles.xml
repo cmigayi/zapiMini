@@ -9,4 +9,6 @@
         <item name="android:textColorSecondary">#ffffff</item>
     </style>
 
+<!--    <style name="NavView" parent="@style/AppTheme"/>-->
+
 </resources>

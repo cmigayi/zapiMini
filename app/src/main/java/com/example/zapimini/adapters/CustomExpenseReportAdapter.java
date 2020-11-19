@@ -48,8 +48,7 @@ public class CustomExpenseReportAdapter extends
         String dateWithoutTime = new DateTimeUtils().removeTimeInDateTime(expense.getDateTime());
         expense.setDateTime(dateWithoutTime);
         holder.binding.setExpense(expense);
-        holder.binding.amount.setText(
-                "ksh."+new MoneyUtils().AddMoneyFormat(expense.getAmount()));
+        holder.binding.amount.setText(new MoneyUtils().AddMoneyFormat(expense.getAmount()));
     }
 
     @Override
