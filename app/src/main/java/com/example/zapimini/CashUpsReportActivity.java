@@ -28,6 +28,8 @@ import com.example.zapimini.localDatabases.CashUpLocalDb;
 import com.example.zapimini.localStorage.UserLocalStorage;
 import com.example.zapimini.presenters.CashUpsReportActivityPresenter;
 import com.example.zapimini.views.CashUpsReportActivityView;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -160,11 +162,12 @@ public class CashUpsReportActivity extends AppCompatActivity implements
     @Override
     public void displayCashUplist(String filter, List<CashUp> cashUpList) {
         cashUpList2 = cashUpList;
+        activityCashUpsReportBinding.pageTitle.setText(filter);
+
         if(cashUpList.size() > 0){
             String amountFormatted = new MoneyUtils().AddMoneyFormat(
                     new CashUpCalculation().getTotalCashUpAmount(cashUpList));
             toolbar.setTitle("CashUps: ("+cashUpList.size()+ " entries)");
-            activityCashUpsReportBinding.pageTitle.setText(filter);
             activityCashUpsReportBinding.amountTv.setText(amountFormatted);
             activityCashUpsReportBinding.recyclerView.setHasFixedSize(true);
             // use a linear layout manager
@@ -196,26 +199,26 @@ public class CashUpsReportActivity extends AppCompatActivity implements
 
     @Override
     public void displayError(String message) {
-        activityCashUpsReportBinding.errorTv.setVisibility(View.VISIBLE);
         activityCashUpsReportBinding.recyclerView.setVisibility(View.GONE);
         activityCashUpsReportBinding.progressBar.setVisibility(View.GONE);
+
+        activityCashUpsReportBinding.errorTv.setVisibility(View.VISIBLE);
         activityCashUpsReportBinding.errorTv.setText(message);
     }
 
     @Override
     public void onCashUpReportClick(int position) {
-//        Log.d(mExpensesReportActivity, "expense clicked: "+position);
-//        intent = new Intent(ExpensesReportActivity.this, ExpenseItemReportActivity.class);
-//        Log.d(mExpensesReportActivity, "cilo: "+expenselist2.get(position));
-//        Expense expense = expenselist2.get(position);
-//        List<String> expenseDataList = new ArrayList<>();
-//        expenseDataList.add(""+expense.getId());
-//        expenseDataList.add(""+expense.getBusinessId());
-//        expenseDataList.add(""+expense.getUserId());
-//        expenseDataList.add(expense.getItem());
-//        expenseDataList.add(""+expense.getAmount());
-//        expenseDataList.add(""+expense.getDateTime());
-//        intent.putExtra("expenseDataList", (Serializable) expenseDataList);
-//        startActivity(intent);
+        Log.d(mCashUpsReportActivity, "cashup clicked: "+position);
+        intent = new Intent(CashUpsReportActivity.this, CashUpItemReportActivity.class);
+        Log.d(mCashUpsReportActivity, "cilo: "+cashUpList2.get(position));
+        CashUp cashUp = cashUpList2.get(position);
+        List<String> cashUpDataList = new ArrayList<>();
+        cashUpDataList.add(""+cashUp.getId());
+        cashUpDataList.add(""+cashUp.getBusinessId());
+        cashUpDataList.add(""+cashUp.getUserId());
+        cashUpDataList.add(""+cashUp.getAmount());
+        cashUpDataList.add(""+cashUp.getDateTime());
+        intent.putExtra("cashUpDataList", (Serializable) cashUpDataList);
+        startActivity(intent);
     }
 }

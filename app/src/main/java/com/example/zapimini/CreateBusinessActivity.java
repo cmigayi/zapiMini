@@ -79,12 +79,12 @@ public class CreateBusinessActivity extends AppCompatActivity
     @Override
     public boolean validateInputs() {
         boolean validated = false;
-        if(activityCreateBusinessBinding.business.getText().toString().equals("") ||
-                activityCreateBusinessBinding.currency.getText().toString().equals("")){
+        if(activityCreateBusinessBinding.business.getText().toString().equals("")){
             displayError("Business or currency is invalid!");
         }else{
             businessName = activityCreateBusinessBinding.business.getText().toString();
-            selectedCurrency = activityCreateBusinessBinding.currency.getText().toString();
+            //selectedCurrency = activityCreateBusinessBinding.currency.getText().toString();
+            selectedCurrency = "Ksh";
             validated = true;
         }
         return validated;

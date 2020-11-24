@@ -150,11 +150,12 @@ public class ExpensesReportActivity extends AppCompatActivity implements
     @Override
     public void displayExpenselist(String filter, List<Expense> expenselist) {
         expenselist2 = expenselist;
+        activityExpensesReportBinding.pageTitle.setText(filter);
+
         if(expenselist.size() > 0){
             String amount = new MoneyUtils().AddMoneyFormat(
                     new ExpenseCalculation().getTotalExpenseAmount(expenselist));
             toolbar.setTitle("Expenses: ("+expenselist.size()+ " entries)");
-            activityExpensesReportBinding.pageTitle.setText(filter);
             activityExpensesReportBinding.amountTv.setText(amount);
             activityExpensesReportBinding.recyclerView.setHasFixedSize(true);
             // use a linear layout manager

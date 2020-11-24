@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/reports" android:title="Reports" app:showAsAction="never"/>
-    <item android:id="@+id/profile" android:title="Profile" app:showAsAction="never"/>
-<!--    <item android:id="@+id/business" android:title="Business" app:showAsAction="never"/>-->
-<!--    <item android:id="@+id/settings" android:title="Settings" app:showAsAction="never"/>-->
+    <item android:id="@+id/cash_up_report" android:title="Cashup report" app:showAsAction="never"/>
+    <item android:id="@+id/expense_report" android:title="Expense report" app:showAsAction="never"/>
+    <item android:id="@+id/income_report" android:title="Income report" app:showAsAction="never"/>
 </menu>

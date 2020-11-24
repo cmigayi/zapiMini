@@ -33,7 +33,7 @@ public class CashUpsReportActivityPresenter {
                             view.displayCashUplist("All", cashUpList);
                         }catch(Exception e){
                             Log.d(mCashUpReportActivityPresenter, "Error: "+e.getMessage());
-
+                            view.displayError("There could be an error. Please try again!");
                         }
                     }
                 });
@@ -47,7 +47,7 @@ public class CashUpsReportActivityPresenter {
             @Override
             public void onFailuire(Throwable t) {
                 Log.d(mCashUpReportActivityPresenter, "error: "+t.getMessage());
-                view.displayError("");
+                view.displayError("There could be an error. Please try again!");
             }
         });
     }
@@ -64,7 +64,7 @@ public class CashUpsReportActivityPresenter {
                             view.displayCashUplist(date, cashUpList);
                         }catch(Exception e){
                             Log.d(mCashUpReportActivityPresenter, "Error: "+e.getMessage());
-
+                            view.displayError("There could be an error. Please try again!");
                         }
                     }
                 });
@@ -78,7 +78,7 @@ public class CashUpsReportActivityPresenter {
             @Override
             public void onFailuire(Throwable t) {
                 Log.d(mCashUpReportActivityPresenter, "error: "+t.getMessage());
-                view.displayError("");
+                view.displayError("There could be an error. Please try again!");
             }
         });
     }

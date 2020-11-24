@@ -98,6 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Preferred Currency:"
+                android:visibility="gone"
                 android:textSize="16sp"
                 app:layout_constraintTop_toBottomOf="@+id/business"/>
 
@@ -106,6 +107,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_amount_edit_text"
+                android:visibility="gone"
                 android:ems="10"
                 android:padding="10dp"
                 android:hint="Preferred currency"

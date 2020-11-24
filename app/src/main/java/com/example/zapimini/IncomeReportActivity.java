@@ -150,12 +150,14 @@ public class IncomeReportActivity extends AppCompatActivity implements
 
     @Override
     public void displayIncomelist(String filter, List<Income> incomelist) {
+        incomelist2 = incomelist;
+        activityIncomeReportBinding.pageTitle.setText(filter);
+
         if(incomelist.size() > 0) {
-            incomelist2 = incomelist;
             String amountFormatted = new MoneyUtils().AddMoneyFormat(
                     new IncomeCalculation().getTotalNetAmount(incomelist));
             toolbar.setTitle("Income: ("+incomelist.size()+ " entries)");
-            activityIncomeReportBinding.pageTitle.setText(filter);
+
             activityIncomeReportBinding.amountTv.setText(amountFormatted);
             activityIncomeReportBinding.recyclerView.setHasFixedSize(true);
             // use a linear layout manager

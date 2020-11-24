@@ -5,51 +5,51 @@ import android.util.Log;
 
 import com.example.zapimini.commons.AppExecutors;
 import com.example.zapimini.commons.DateTimeUtils;
-import com.example.zapimini.data.Expense;
+import com.example.zapimini.data.CashUp;
 import com.example.zapimini.data.Income;
-import com.example.zapimini.localDatabases.ExpenseLocalDb;
+import com.example.zapimini.localDatabases.CashUpLocalDb;
 import com.example.zapimini.localDatabases.IncomeLocalDb;
-import com.example.zapimini.repositories.ExpenseRepository;
+import com.example.zapimini.repositories.CashUpRepository;
 import com.example.zapimini.repositories.IncomeRepository;
-import com.example.zapimini.views.ExpenseItemReportActivityView;
+import com.example.zapimini.views.CashUpItemReportActivityView;
 
 import java.util.List;
 
-public class ExpenseItemReportActivityPresenter {
-    final static String mExpenseItemReportActivityPresenter = "ExpenseItemReport";
-    ExpenseItemReportActivityView view;
-    ExpenseLocalDb repository;
+public class CashUpItemReportActivityPresenter {
+    final static String mCashUpItemReportActivityPresenter = "CashUpItemReport";
+    CashUpItemReportActivityView view;
+    CashUpLocalDb repository;
 
-    public ExpenseItemReportActivityPresenter(ExpenseLocalDb repository, ExpenseItemReportActivityView view) {
+    public CashUpItemReportActivityPresenter(CashUpLocalDb repository, CashUpItemReportActivityView view) {
         this.view = view;
         this.repository = repository;
     }
 
-    public void updateExpenseInLocalDb(Expense newExpense, Expense oldExpense, Context context){
-        repository.updateExpense(newExpense, view.getProgressbar(), new ExpenseRepository.OnFinishedListerner() {
+    public void updateCashUpInLocalDb(CashUp newCashUp, CashUp oldCashUp, Context context){
+        repository.updateCashUp(newCashUp, new CashUpRepository.OnFinishedListerner() {
             @Override
-            public void onFinished(List<Expense> expenselist) {
+            public void onFinished(List<CashUp> cashUpList) {
 
             }
 
             @Override
             public void onFinished(Object response) {
-                Log.d(mExpenseItemReportActivityPresenter, "response: "+response);
+                Log.d(mCashUpItemReportActivityPresenter, "response: "+response);
                 IncomeLocalDb incomeLocalDb = new IncomeLocalDb(context);
-                String date = new DateTimeUtils().removeTimeInDateTime(newExpense.getDateTime());
-                Log.d(mExpenseItemReportActivityPresenter, "date: "+date+" ,"+newExpense.getDateTime());
-                incomeLocalDb.getIncomeByUserIdByDate(newExpense.getUserId(), date, new IncomeRepository.OnFinishedListerner() {
+                String date = new DateTimeUtils().removeTimeInDateTime(newCashUp.getDateTime());
+                Log.d(mCashUpItemReportActivityPresenter, "date: "+date+" ,"+newCashUp.getDateTime());
+                incomeLocalDb.getIncomeByUserIdByDate(newCashUp.getUserId(), date, new IncomeRepository.OnFinishedListerner() {
                     @Override
                     public void onFinished(List<Income> incomelist) {
                         try{
-                            Log.d(mExpenseItemReportActivityPresenter,"Response: "+incomelist.size());
+                            Log.d(mCashUpItemReportActivityPresenter,"Response: "+incomelist.size());
                             if(incomelist.size() > 0){
                                 // update income
                                 Income income = incomelist.get(0);
-                                double newTotalExpense = newExpense.getAmount() +
-                                        (income.getTotalExpense()-oldExpense.getAmount());
-                                double netAmount = income.getGrossAmount() - newTotalExpense;
-                                income.setTotalExpense(newTotalExpense);
+                                double newGrossAmount = newCashUp.getAmount() +
+                                        (income.getGrossAmount()-oldCashUp.getAmount());
+                                double netAmount = newGrossAmount - income.getTotalExpense();
+                                income.setGrossAmount(newGrossAmount);
                                 income.setNetAmount(netAmount);
                                 income.setDateTime(date);
                                 updateIncome(incomeLocalDb, income);
@@ -57,7 +57,7 @@ public class ExpenseItemReportActivityPresenter {
                                 AppExecutors.getInstance().mainThread().execute(new Runnable() {
                                     @Override
                                     public void run() {
-                                        view.updatedExpense(newExpense);
+                                        view.updatedCashUp(newCashUp);
                                     }
                                 });
                             }else{
@@ -70,7 +70,7 @@ public class ExpenseItemReportActivityPresenter {
                             }
 
                         }catch(Exception e){
-                            Log.d(mExpenseItemReportActivityPresenter,"Error: "+e.getMessage());
+                            Log.d(mCashUpItemReportActivityPresenter,"Error: "+e.getMessage());
                             AppExecutors.getInstance().mainThread().execute(new Runnable() {
                                 @Override
                                 public void run() {
@@ -87,7 +87,7 @@ public class ExpenseItemReportActivityPresenter {
 
                     @Override
                     public void onFailuire(Throwable t) {
-                        Log.d(mExpenseItemReportActivityPresenter, "error: "+t.getMessage());
+                        Log.d(mCashUpItemReportActivityPresenter, "error: "+t.getMessage());
                         view.displayError("Sorry there was an error. Kindly try again!");
                     }
                 });
@@ -95,35 +95,35 @@ public class ExpenseItemReportActivityPresenter {
 
             @Override
             public void onFailuire(Throwable t) {
-                Log.d(mExpenseItemReportActivityPresenter, "error: "+t.getMessage());
+                Log.d(mCashUpItemReportActivityPresenter, "error: "+t.getMessage());
                 view.displayError("Sorry there was an error. Kindly try again!");
             }
         });
     }
 
-    public void deleteExpenseInLocalDb(Expense expense, Context context){
-        repository.deleteExpense(expense, view.getProgressbar(), new ExpenseRepository.OnFinishedListerner() {
+    public void deleteCashUpInLocalDb(CashUp cashUp, Context context){
+        repository.deleteCashUp(cashUp, new CashUpRepository.OnFinishedListerner() {
             @Override
-            public void onFinished(List<Expense> expenselist) {
+            public void onFinished(List<CashUp> cashUpList) {
 
             }
 
             @Override
             public void onFinished(Object response) {
-                Log.d(mExpenseItemReportActivityPresenter, "response: "+response);
+                Log.d(mCashUpItemReportActivityPresenter, "response: "+response);
                 IncomeLocalDb incomeLocalDb = new IncomeLocalDb(context);
-                String date = new DateTimeUtils().removeTimeInDateTime(expense.getDateTime());
-                Log.d(mExpenseItemReportActivityPresenter, "date: "+date+" ,"+expense.getDateTime());
-                incomeLocalDb.getIncomeByUserIdByDate(expense.getUserId(), date, new IncomeRepository.OnFinishedListerner() {
+                String date = new DateTimeUtils().removeTimeInDateTime(cashUp.getDateTime());
+                Log.d(mCashUpItemReportActivityPresenter, "date: "+date+" ,"+cashUp.getDateTime());
+                incomeLocalDb.getIncomeByUserIdByDate(cashUp.getUserId(), date, new IncomeRepository.OnFinishedListerner() {
                     @Override
                     public void onFinished(List<Income> incomelist) {
                         try{
                             if(incomelist.size() > 0){
                                 // update income
                                 Income income = incomelist.get(0);
-                                double newTotalExpense = income.getTotalExpense() - expense.getAmount();
-                                double netAmount = income.getGrossAmount() - newTotalExpense;
-                                income.setTotalExpense(newTotalExpense);
+                                double newGrossAmount = income.getGrossAmount() - cashUp.getAmount();
+                                double netAmount = newGrossAmount - income.getTotalExpense();
+                                income.setGrossAmount(newGrossAmount);
                                 income.setNetAmount(netAmount);
                                 income.setDateTime(date);
                                 updateIncome(incomeLocalDb, income);
@@ -131,7 +131,7 @@ public class ExpenseItemReportActivityPresenter {
                                 AppExecutors.getInstance().mainThread().execute(new Runnable() {
                                     @Override
                                     public void run() {
-                                        view.deletedExpense(expense);
+                                        view.deletedCashUp(cashUp);
                                     }
                                 });
                             }else{
@@ -143,7 +143,7 @@ public class ExpenseItemReportActivityPresenter {
                                 });
                             }
                         }catch(Exception e){
-                            Log.d(mExpenseItemReportActivityPresenter,"Error: "+e.getMessage());
+                            Log.d(mCashUpItemReportActivityPresenter,"Error: "+e.getMessage());
                             AppExecutors.getInstance().mainThread().execute(new Runnable() {
                                 @Override
                                 public void run() {
@@ -160,7 +160,7 @@ public class ExpenseItemReportActivityPresenter {
 
                     @Override
                     public void onFailuire(Throwable t) {
-                        Log.d(mExpenseItemReportActivityPresenter, "error: "+t.getMessage());
+                        Log.d(mCashUpItemReportActivityPresenter, "error: "+t.getMessage());
                         view.displayError("Sorry there was an error. Kindly try again!");
                     }
                 });
@@ -168,7 +168,7 @@ public class ExpenseItemReportActivityPresenter {
 
             @Override
             public void onFailuire(Throwable t) {
-                Log.d(mExpenseItemReportActivityPresenter, "error: "+t.getMessage());
+                Log.d(mCashUpItemReportActivityPresenter, "error: "+t.getMessage());
                 view.displayError("Sorry there was an error. Kindly try again!");
             }
         });
@@ -183,12 +183,12 @@ public class ExpenseItemReportActivityPresenter {
 
             @Override
             public void onFinished(Object object) {
-                Log.d(mExpenseItemReportActivityPresenter, "Response: "+object);
+                Log.d(mCashUpItemReportActivityPresenter, "Response: "+object);
             }
 
             @Override
             public void onFailuire(Throwable t) {
-                Log.d(mExpenseItemReportActivityPresenter, "Error: "+t.getMessage());
+                Log.d(mCashUpItemReportActivityPresenter, "Error: "+t.getMessage());
                 view.displayError("");
             }
         });

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -14,6 +15,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
+
 import com.example.zapimini.commons.AddItemDialog;
 import com.example.zapimini.commons.DateTimeUtils;
 import com.example.zapimini.commons.MoneyUtils;
@@ -23,9 +26,10 @@ import com.example.zapimini.localDatabases.IncomeLocalDb;
 import com.example.zapimini.localStorage.UserLocalStorage;
 import com.example.zapimini.presenters.HomeActivityPresenter;
 import com.example.zapimini.views.HomeActivityView;
+import com.google.android.material.navigation.NavigationView;
 
 public class HomeActivity extends AppCompatActivity
-        implements HomeActivityView, View.OnClickListener {
+        implements HomeActivityView, View.OnClickListener{
     ActivityHomeBinding activityHomeBinding;
     static Activity aHome;
 
@@ -54,19 +58,6 @@ public class HomeActivity extends AppCompatActivity
         user = userLocalStorage.getLoggedInUser();
 
         IncomeLocalDb incomeLocalDb = new IncomeLocalDb(this);
-
-        // drawer layout instance to toggle the menu icon to open
-        // drawer and back button to close drawer
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this,
-                activityHomeBinding.drawerLayout, R.string.nav_open, R.string.nav_close);
-
-        // pass the Open and Close toggle for the drawer layout listener
-        // to toggle the button
-        activityHomeBinding.drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
-
-        // to make the Navigation drawer icon always appear on the action bar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         presenter = new HomeActivityPresenter(incomeLocalDb, this);
 
@@ -105,23 +96,39 @@ public class HomeActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         switch(id){
-            case R.id.reports:
-                intent = new Intent(HomeActivity.this, ReportsActivity.class);
-                intent.putExtra("activity", "Home");
+            case R.id.cash_up_report:
+                intent = new Intent(HomeActivity.this, CashUpsReportActivity.class);
+                intent.putExtra("activity", "Reports");
                 startActivity(intent);
                 break;
-            case R.id.profile:
-                intent = new Intent(HomeActivity.this, ProfileActivity.class);
+            case R.id.expense_report:
+                intent = new Intent(HomeActivity.this, ExpensesReportActivity.class);
+                intent.putExtra("activity", "Reports");
                 startActivity(intent);
                 break;
-            case R.id.business:
-                intent = new Intent(HomeActivity.this, BusinessProfileActivity.class);
+            case R.id.income_report:
+                intent = new Intent(HomeActivity.this, IncomeReportActivity.class);
+                intent.putExtra("activity", "Reports");
                 startActivity(intent);
                 break;
-            case R.id.settings:
-                intent = new Intent(HomeActivity.this, SettingsActivity.class);
-                startActivity(intent);
-                break;
+
+//            case R.id.reports:
+//                intent = new Intent(HomeActivity.this, ReportsActivity.class);
+//                intent.putExtra("activity", "Home");
+//                startActivity(intent);
+//                break;
+//            case R.id.profile:
+//                intent = new Intent(HomeActivity.this, ProfileActivity.class);
+//                startActivity(intent);
+//                break;
+//            case R.id.business:
+//                intent = new Intent(HomeActivity.this, BusinessProfileActivity.class);
+//                startActivity(intent);
+//                break;
+//            case R.id.settings:
+//                intent = new Intent(HomeActivity.this, SettingsActivity.class);
+//                startActivity(intent);
+//                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -137,18 +144,18 @@ public class HomeActivity extends AppCompatActivity
                 AddItemDialog addItemDialog = new AddItemDialog(addItemOptions);
                 addItemDialog.show(getSupportFragmentManager(), "dialog");
                 break;
-            case R.id.cardview3:
-                intent = new Intent(HomeActivity.this, IncomeReportActivity.class);
-                intent.putExtra("date", new DateTimeUtils().getTodayDate());
-                intent.putExtra("activity", "Home");
-                startActivity(intent);
-                break;
-            case R.id.cardview4:
-                intent = new Intent(HomeActivity.this, IncomeReportActivity.class);
-                //intent.putExtra("all", new DateTimeUtils().getTodayDate());
-                intent.putExtra("activity", "Home");
-                startActivity(intent);
-                break;
+//            case R.id.cardview3:
+//                intent = new Intent(HomeActivity.this, IncomeReportActivity.class);
+//                intent.putExtra("date", new DateTimeUtils().getTodayDate());
+//                intent.putExtra("activity", "Home");
+//                startActivity(intent);
+//                break;
+//            case R.id.cardview4:
+//                intent = new Intent(HomeActivity.this, IncomeReportActivity.class);
+//                //intent.putExtra("all", new DateTimeUtils().getTodayDate());
+//                intent.putExtra("activity", "Home");
+//                startActivity(intent);
+//                break;
             case R.id.cash_up_btn:
                 intent = new Intent(HomeActivity.this, CashUpActivity.class);
                 startActivity(intent);
