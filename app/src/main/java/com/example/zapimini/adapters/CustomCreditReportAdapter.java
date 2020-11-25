@@ -49,8 +49,7 @@ public class CustomCreditReportAdapter extends
         String dateWithoutTime = new DateTimeUtils().removeTimeInDateTime(credit.getDateTime());
         credit.setDateTime(dateWithoutTime);
         holder.binding.setCredit(credit);
-        holder.binding.amount.setText(
-                "ksh."+new MoneyUtils().AddMoneyFormat(credit.getAmount()));
+        holder.binding.amount.setText(new MoneyUtils().AddMoneyFormat(credit.getAmount()));
     }
 
     @Override

@@ -34,7 +34,7 @@ public class IncomeReportActivityPresenter {
                             view.displayIncomelist("All", incomelist);
                         }catch(Exception e){
                             Log.d(mIncomeReportActivityPresenter, "Error: "+e.getMessage());
-                            view.displayError("There was a problem / no data found.");
+                            view.displayError("There was a problem. Please try again!");
                         }
                     }
                 });
@@ -48,7 +48,7 @@ public class IncomeReportActivityPresenter {
             @Override
             public void onFailuire(Throwable t) {
                 Log.d(mIncomeReportActivityPresenter, "Error: "+t.getMessage());
-                view.displayError("There was a problem retrievining the data.");
+                view.displayError("There was a problem. Please try again!");
             }
         });
     }
@@ -65,7 +65,7 @@ public class IncomeReportActivityPresenter {
                             view.displayIncomelist(date, incomelist);
                         }catch(Exception e){
                             Log.d(mIncomeReportActivityPresenter, "Error: "+e.getMessage());
-                            view.displayError("There was a problem / no data found.");
+                            view.displayError("There was a problem. Please try again!");
                         }
                     }
                 });
@@ -79,7 +79,7 @@ public class IncomeReportActivityPresenter {
             @Override
             public void onFailuire(Throwable t) {
                 Log.d(mIncomeReportActivityPresenter, "Error: "+t.getMessage());
-                view.displayError("There was a problem retrievining the data.");
+                view.displayError("There was a problem. Please try again!");
             }
         });
     }

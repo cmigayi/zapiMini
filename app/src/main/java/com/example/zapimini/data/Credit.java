@@ -22,9 +22,6 @@ public class Credit {
     @ColumnInfo(name = "phone")
     String phone;
 
-    @ColumnInfo(name = "description")
-    String description;
-
     @ColumnInfo(name = "amount")
     double amount;
 
@@ -35,13 +32,12 @@ public class Credit {
     String dateTime;
 
     public Credit(int id, int userId, int businessId, String name, String phone,
-                  String description, double amount, String type, String dateTime) {
+                  double amount, String type, String dateTime) {
         this.id = id;
         this.userId = userId;
         this.businessId = businessId;
         this.name = name;
         this.phone = phone;
-        this.description = description;
         this.amount = amount;
         this.type = type;
         this.dateTime = dateTime;
@@ -91,14 +87,6 @@ public class Credit {
         this.phone = phone;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public double getAmount() {
         return amount;
     }
@@ -131,7 +119,6 @@ public class Credit {
                 ", businessId=" + businessId +
                 ", name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
-                ", description='" + description + '\'' +
                 ", amount=" + amount +
                 ", type='" + type + '\'' +
                 ", dateTime='" + dateTime + '\'' +

@@ -3,13 +3,11 @@ package com.example.zapimini.daos;
 import com.example.zapimini.data.User;
 
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
-import androidx.room.Transaction;
 import androidx.room.Update;
 
 @Dao

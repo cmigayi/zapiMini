@@ -29,10 +29,9 @@ public class AddCreditActivityPresenter {
                         try {
                             Log.d(mAddCreditActivityPresenter, "Response: "+creditlist.size());
                             view.createdCredit(creditlist.get(0));
-
                         }catch(Exception e){
                             Log.d(mAddCreditActivityPresenter, "Error: "+e.getMessage());
-                            view.displayError("Sorry, user was not created.");;
+                            view.displayError("There was an error. Please try again!");
                         }
                     }
                 });
@@ -49,7 +48,7 @@ public class AddCreditActivityPresenter {
                 AppExecutors.getInstance().mainThread().execute(new Runnable() {
                     @Override
                     public void run() {
-                        view.displayError("Sorry, user was not created.");
+                        view.displayError("There was an error. Please try again!");
                     }
                 });
             }

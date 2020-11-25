@@ -50,7 +50,7 @@
                 android:id="@+id/name_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="name:"
+                android:text="Name:"
                 android:textSize="16sp"
                 app:layout_constraintTop_toTopOf="parent"/>
 
@@ -65,13 +65,33 @@
                 app:layout_constraintTop_toBottomOf="@+id/name_tv"/>
 
             <TextView
+                android:id="@+id/phone_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Phone:"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@+id/name"/>
+
+            <EditText
+                android:id="@+id/phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"
+                android:background="@drawable/bg_write_edit_text"
+                android:hint="Phone number"
+                android:inputType="phone"
+                app:layout_constraintTop_toBottomOf="@+id/phone_tv"/>
+
+            <TextView
                 android:id="@+id/amount_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Amount:"
                 android:textSize="16sp"
-                app:layout_constraintTop_toBottomOf="@+id/name"/>
+                app:layout_constraintTop_toBottomOf="@+id/phone"/>
 
             <EditText
                 android:id="@+id/amount"
@@ -109,7 +129,7 @@
             android:layout_gravity="center"
             android:background="@drawable/bg_delete_btn"
             android:textColor="#ffffff"
-            android:text="Delete this expense"/>
+            android:text="Delete this credit"/>
 
     </LinearLayout>
 

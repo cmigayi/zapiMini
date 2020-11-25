@@ -20,6 +20,7 @@ import com.example.zapimini.adapters.CustomCashUpReportAdapter;
 import com.example.zapimini.commons.CashUpCalculation;
 import com.example.zapimini.commons.DatePickerFragment;
 import com.example.zapimini.commons.DateTimeUtils;
+import com.example.zapimini.commons.ExportDocumentsUtils;
 import com.example.zapimini.commons.MoneyUtils;
 import com.example.zapimini.data.CashUp;
 import com.example.zapimini.data.User;
@@ -131,8 +132,8 @@ public class CashUpsReportActivity extends AppCompatActivity implements
                 newFragment.show(getSupportFragmentManager(), "datePicker");
                 break;
             case R.id.export:
-//                ExportDocumentsUtils exportDocumentsUtils = new ExportDocumentsUtils(getApplicationContext());
-//                exportDocumentsUtils.expenseCSVFile(expenselist2);
+                ExportDocumentsUtils exportDocumentsUtils = new ExportDocumentsUtils(getApplicationContext());
+                exportDocumentsUtils.cashUpCSVFile(cashUpList2);
                 break;
             case android.R.id.home:
                 finish();

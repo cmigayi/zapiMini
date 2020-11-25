@@ -121,7 +121,7 @@
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:textColor="#4b4b4b"
-                    app:layout_constraintTop_toBottomOf="@+id/cash_up_heading"
+                    app:layout_constraintTop_toBottomOf="@+id/income_heading"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"/>
 

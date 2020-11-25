@@ -7,6 +7,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -107,8 +109,7 @@ public class AddCreditActivity extends AppCompatActivity
                             business.getId(),
                             user.getId(),
                             activityAddCreditBinding.name.getText().toString(),
-                            "",
-                            "",
+                            activityAddCreditBinding.phone.getText().toString(),
                             Double.parseDouble(activityAddCreditBinding.amountValue.getText().toString()),
                             selectedCreditOption(activityAddCreditBinding.creditOptions),
                             new DateTimeUtils().getTodayDateTime()
@@ -195,13 +196,13 @@ public class AddCreditActivity extends AppCompatActivity
             intent = new Intent(AddCreditActivity.this,
                     AddCreditConfirmationActivity.class);
             intent.putExtra("message", "You have added this credit to expense reports successfully!");
-            intent.putExtra("message_2", "Item: "+credit.getName()+
-                    ", Amount: ksh."+credit.getAmount());
+            intent.putExtra("message_2", "Item: "+credit.getName()+", "+
+                    credit.getPhone()+", Amount: ksh."+credit.getAmount());
             startActivity(intent);
             finish();
         }catch(Exception e){
             Log.d(mAddCreditActivity, "Error: "+e.getMessage());
-            displayError("");
+            displayError("There was an error. Please try again!");
         }
     }
 

@@ -58,10 +58,9 @@ public class CreditItemReportActivity extends AppCompatActivity
                 Integer.parseInt(creditDataList.get(2)),
                 creditDataList.get(3),
                 creditDataList.get(4),
-                creditDataList.get(5),
-                Double.parseDouble(creditDataList.get(6)),
-                creditDataList.get(7),
-                creditDataList.get(8)
+                Double.parseDouble(creditDataList.get(5)),
+                creditDataList.get(6),
+                creditDataList.get(7)
         );
         loadCreditToFields(importedCredit);
 
@@ -88,8 +87,7 @@ public class CreditItemReportActivity extends AppCompatActivity
                 importedCredit.getBusinessId(),
                 importedCredit.getUserId(),
                 activityCreditItemBinding.name.getText().toString(),
-                "",
-                "",
+                activityCreditItemBinding.phone.getText().toString(),
                 Double.parseDouble(activityCreditItemBinding.amount.getText().toString()),
                 "",
                 importedCredit.getDateTime()
@@ -114,6 +112,7 @@ public class CreditItemReportActivity extends AppCompatActivity
     public void loadCreditToFields(Credit credit) {
         activityCreditItemBinding.pageTitle.setText("Update '"+credit.getName()+"'");
         activityCreditItemBinding.name.setText(credit.getName());
+        activityCreditItemBinding.phone.setText(credit.getPhone());
         activityCreditItemBinding.amount.setText(""+credit.getAmount());
     }
 

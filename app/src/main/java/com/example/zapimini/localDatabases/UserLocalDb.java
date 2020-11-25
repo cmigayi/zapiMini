@@ -2,7 +2,6 @@ package com.example.zapimini.localDatabases;
 
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
 import android.widget.ProgressBar;
 
 import com.example.zapimini.commons.AppExecutors;
@@ -10,11 +9,7 @@ import com.example.zapimini.daoDatabases.UserDaoDatabase;
 import com.example.zapimini.data.User;
 import com.example.zapimini.repositories.UserRepository;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
 
 public class UserLocalDb implements UserRepository {
     final static String mUserLocalDb = "UserLocalDb";

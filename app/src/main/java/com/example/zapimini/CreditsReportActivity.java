@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -165,8 +167,9 @@ public class CreditsReportActivity extends AppCompatActivity
         if(creditlist.size() > 0){
             String amount = new MoneyUtils().AddMoneyFormat(
                     new CreditCalculation().getTotalCreditAmount(creditlist));
-            toolbar.setTitle("Expenses: ("+creditlist.size()+ " entries)");
-            activityCreditReportBinding.pageTitle.setText(filter+" | Amount: ksh."+amount);
+            toolbar.setTitle("Credits: ("+creditlist.size()+ " entries)");
+            activityCreditReportBinding.pageTitle.setText(filter);
+            activityCreditReportBinding.amountTv.setText(""+amount);
             activityCreditReportBinding.recyclerView.setHasFixedSize(true);
             // use a linear layout manager
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -205,21 +208,45 @@ public class CreditsReportActivity extends AppCompatActivity
 
     @Override
     public void onCreditReportClick(int position) {
-        Log.d(mCreditReportActivity, "credit clicked: "+position);
-        intent = new Intent(CreditsReportActivity.this, CreditItemReportActivity.class);
-        Log.d(mCreditReportActivity, "cilo: "+creditlist2.get(position));
-        Credit credit = creditlist2.get(position);
-        List<String> creditDataList = new ArrayList<>();
-        creditDataList.add(""+credit.getId());
-        creditDataList.add(""+credit.getBusinessId());
-        creditDataList.add(""+credit.getUserId());
-        creditDataList.add(credit.getName());
-        creditDataList.add(credit.getPhone());
-        creditDataList.add(credit.getDescription());
-        creditDataList.add(""+credit.getAmount());
-        creditDataList.add(credit.getType());
-        creditDataList.add(""+credit.getDateTime());
-        intent.putExtra("creditDataList", (Serializable) creditDataList);
-        startActivity(intent);
+        final CharSequence[] items = {"Modify Credit","Credit Paid","Cancel"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Credit Actions");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Log.d(mCreditReportActivity, "cilo: "+creditlist2.get(position));
+                Credit credit = creditlist2.get(position);
+                List<String> creditDataList = new ArrayList<>();
+                creditDataList.add(""+credit.getId());
+                creditDataList.add(""+credit.getBusinessId());
+                creditDataList.add(""+credit.getUserId());
+                creditDataList.add(credit.getName());
+                creditDataList.add(credit.getPhone());
+                creditDataList.add(""+credit.getAmount());
+                creditDataList.add(credit.getType());
+                creditDataList.add(""+credit.getDateTime());
+
+                switch (which){
+                    case 0:
+                        Log.d(mCreditReportActivity, "credit clicked: "+position);
+                        intent = new Intent(CreditsReportActivity.this, CreditItemReportActivity.class);
+
+                        intent.putExtra("creditDataList", (Serializable) creditDataList);
+                        startActivity(intent);
+                        break;
+                    case 1:
+                        intent = new Intent(CreditsReportActivity.this,
+                                CreditItemPaidConfirmationActivity.class);
+
+                        intent.putExtra("creditDataList", (Serializable) creditDataList);
+                        startActivity(intent);
+                        break;
+                    default:
+                        dialog.cancel();
+                        break;
+                }
+            }
+        });
+        builder.show();
     }
 }

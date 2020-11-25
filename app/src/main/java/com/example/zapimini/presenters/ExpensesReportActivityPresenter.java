@@ -31,7 +31,7 @@ public class ExpensesReportActivityPresenter {
                             view.displayExpenselist("All", expenselist);
                         }catch(Exception e){
                             Log.d(mExpenseReportActivityPresenter, "Error: "+e.getMessage());
-
+                            view.displayError("There was a problem. Please try again!");
                         }
                     }
                 });
@@ -45,7 +45,7 @@ public class ExpensesReportActivityPresenter {
             @Override
             public void onFailuire(Throwable t) {
                 Log.d(mExpenseReportActivityPresenter, "error: "+t.getMessage());
-                view.displayError("");
+                view.displayError("There was a problem. Please try again!");
             }
         });
     }
@@ -62,7 +62,7 @@ public class ExpensesReportActivityPresenter {
                             view.displayExpenselist(date, expenselist);
                         }catch(Exception e){
                             Log.d(mExpenseReportActivityPresenter, "Error: "+e.getMessage());
-
+                            view.displayError("There was a problem. Please try again!");
                         }
                     }
                 });
@@ -76,7 +76,7 @@ public class ExpensesReportActivityPresenter {
             @Override
             public void onFailuire(Throwable t) {
                 Log.d(mExpenseReportActivityPresenter, "error: "+t.getMessage());
-                view.displayError("");
+                view.displayError("There was a problem. Please try again!");
             }
         });
     }

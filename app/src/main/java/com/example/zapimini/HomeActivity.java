@@ -106,6 +106,11 @@ public class HomeActivity extends AppCompatActivity
                 intent.putExtra("activity", "Reports");
                 startActivity(intent);
                 break;
+            case R.id.credit_report:
+                intent = new Intent(HomeActivity.this, CreditsReportActivity.class);
+                intent.putExtra("activity", "Reports");
+                startActivity(intent);
+                break;
             case R.id.income_report:
                 intent = new Intent(HomeActivity.this, IncomeReportActivity.class);
                 intent.putExtra("activity", "Reports");
@@ -139,7 +144,7 @@ public class HomeActivity extends AppCompatActivity
             case R.id.add_item_btn:
                 String[] addItemOptions = {
                         "Expense",
-//                        "Credit"
+                        "Credit"
                 };
                 AddItemDialog addItemDialog = new AddItemDialog(addItemOptions);
                 addItemDialog.show(getSupportFragmentManager(), "dialog");

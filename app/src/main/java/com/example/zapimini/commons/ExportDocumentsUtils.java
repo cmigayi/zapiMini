@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import com.example.zapimini.data.BankTransaction;
+import com.example.zapimini.data.CashUp;
 import com.example.zapimini.data.Credit;
 import com.example.zapimini.data.Expense;
 import com.example.zapimini.data.Income;
@@ -61,6 +62,15 @@ public class ExportDocumentsUtils {
                     credit.getAmount()+","+credit.getPhone()+","+credit.getType());
         }
         csvFileExporter("creditdata.csv", "CreditData");
+    }
+
+    public void cashUpCSVFile(List<CashUp> cashUpList){
+        data.append("DateTime,Name,Amount,Phone,type");
+        for(int i = 0; i<cashUpList.size(); i++){
+            CashUp cashUp = cashUpList.get(i);
+            data.append("\n"+cashUp.getDateTime()+cashUp.getAmount());
+        }
+        csvFileExporter("cashupdata.csv", "CashUpData");
     }
 
     private void csvFileExporter(String fileNameWithExtension, String docName){

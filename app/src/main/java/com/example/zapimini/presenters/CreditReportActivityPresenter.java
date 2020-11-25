@@ -32,6 +32,7 @@ public class CreditReportActivityPresenter {
                             view.displayCreditlist(date, creditlist);
                         }catch(Exception e){
                             Log.d(mCreditReportActivityPresenter, "Error: "+e.getMessage());
+                            view.displayError("There was a problem. Please try again!");
                         }
                     }
                 });
@@ -45,7 +46,7 @@ public class CreditReportActivityPresenter {
             @Override
             public void onFailuire(Throwable t) {
                 Log.d(mCreditReportActivityPresenter, "error: "+t.getMessage());
-                view.displayError("");
+                view.displayError("There was a problem. Please try again!");
             }
         });
     }
@@ -62,6 +63,7 @@ public class CreditReportActivityPresenter {
                             view.displayCreditlist("All", creditlist);
                         }catch(Exception e){
                             Log.d(mCreditReportActivityPresenter, "Error: "+e.getMessage());
+                            view.displayError("There was a problem. Please try again!");
                         }
                     }
                 });
@@ -75,7 +77,7 @@ public class CreditReportActivityPresenter {
             @Override
             public void onFailuire(Throwable t) {
                 Log.d(mCreditReportActivityPresenter, "error: "+t.getMessage());
-                view.displayError("");
+                view.displayError("There was a problem. Please try again!");
             }
         });
     }
