@@ -21,6 +21,11 @@ public class CashUp {
     @SerializedName("business_id")
     int businessId;
 
+    // This will apply when credit amount is repaid, otherwise the id will remain -1
+    @ColumnInfo(name = "credit_id")
+    @SerializedName("credit_id")
+    int creditId;
+
     @ColumnInfo(name = "amount")
     double amount;
 
@@ -28,10 +33,11 @@ public class CashUp {
     @SerializedName("date_time")
     String dateTime;
 
-    public CashUp(int id, int userId, int businessId, double amount, String dateTime) {
+    public CashUp(int id, int userId, int businessId, int creditId, double amount, String dateTime) {
         this.id = id;
         this.userId = userId;
         this.businessId = businessId;
+        this.creditId = creditId;
         this.amount = amount;
         this.dateTime = dateTime;
     }
@@ -64,6 +70,14 @@ public class CashUp {
         this.businessId = businessId;
     }
 
+    public int getCreditId() {
+        return creditId;
+    }
+
+    public void setCreditId(int creditId) {
+        this.creditId = creditId;
+    }
+
     public double getAmount() {
         return amount;
     }
@@ -78,5 +92,17 @@ public class CashUp {
 
     public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
+    }
+
+    @Override
+    public String toString() {
+        return "CashUp{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", businessId=" + businessId +
+                ", creditId=" + creditId +
+                ", amount=" + amount +
+                ", dateTime='" + dateTime + '\'' +
+                '}';
     }
 }

@@ -16,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
 import com.example.zapimini.adapters.CustomCashUpReportAdapter;
 import com.example.zapimini.commons.CashUpCalculation;
 import com.example.zapimini.commons.DatePickerFragment;
@@ -23,6 +25,7 @@ import com.example.zapimini.commons.DateTimeUtils;
 import com.example.zapimini.commons.ExportDocumentsUtils;
 import com.example.zapimini.commons.MoneyUtils;
 import com.example.zapimini.data.CashUp;
+import com.example.zapimini.data.Credit;
 import com.example.zapimini.data.User;
 import com.example.zapimini.databinding.ActivityCashUpsReportBinding;
 import com.example.zapimini.localDatabases.CashUpLocalDb;
@@ -210,16 +213,25 @@ public class CashUpsReportActivity extends AppCompatActivity implements
     @Override
     public void onCashUpReportClick(int position) {
         Log.d(mCashUpsReportActivity, "cashup clicked: "+position);
-        intent = new Intent(CashUpsReportActivity.this, CashUpItemReportActivity.class);
-        Log.d(mCashUpsReportActivity, "cilo: "+cashUpList2.get(position));
+
         CashUp cashUp = cashUpList2.get(position);
-        List<String> cashUpDataList = new ArrayList<>();
-        cashUpDataList.add(""+cashUp.getId());
-        cashUpDataList.add(""+cashUp.getBusinessId());
-        cashUpDataList.add(""+cashUp.getUserId());
-        cashUpDataList.add(""+cashUp.getAmount());
-        cashUpDataList.add(""+cashUp.getDateTime());
-        intent.putExtra("cashUpDataList", (Serializable) cashUpDataList);
-        startActivity(intent);
+
+        if(cashUp.getCreditId() != -1){
+            Toast.makeText(getApplicationContext(),
+                    "All Credit Payment posts can only be accessed from the credit report page!",
+                    Toast.LENGTH_LONG).show();
+        }else {
+            intent = new Intent(CashUpsReportActivity.this, CashUpItemReportActivity.class);
+            Log.d(mCashUpsReportActivity, "cilo: " + cashUpList2.get(position));
+            List<String> cashUpDataList = new ArrayList<>();
+            cashUpDataList.add("" + cashUp.getId());
+            cashUpDataList.add("" + cashUp.getBusinessId());
+            cashUpDataList.add("" + cashUp.getUserId());
+            cashUpDataList.add("" + cashUp.getCreditId());
+            cashUpDataList.add("" + cashUp.getAmount());
+            cashUpDataList.add("" + cashUp.getDateTime());
+            intent.putExtra("cashUpDataList", (Serializable) cashUpDataList);
+            startActivity(intent);
+        }
     }
 }

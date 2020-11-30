@@ -180,7 +180,7 @@
                             android:background="@drawable/bg_radio_button"
                             android:textColor="#5f5f5f"
                             android:textSize="17sp"
-                            android:text="This business or person owes me or my business money (Owed)."/>
+                            android:text="This business or person owes me or my business money (Receivable)."/>
 
                         <RadioButton android:id="@+id/owes"
                             android:layout_width="wrap_content"
@@ -189,7 +189,7 @@
                             android:background="@drawable/bg_radio_button"
                             android:textColor="#5f5f5f"
                             android:textSize="17sp"
-                            android:text="I owe this business, supplier or person money (Owes)."/>
+                            android:text="I owe this business, supplier or person money (Payable)."/>
                     </RadioGroup>
 
                     <Button

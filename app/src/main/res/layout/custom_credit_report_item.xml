@@ -44,21 +44,55 @@
 
         <TextView
             android:id="@+id/phone"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:text="@{`Phone: `+credit.phone}"
-            android:textSize="17sp"
+            android:textSize="16sp"
             app:layout_constraintTop_toBottomOf="@id/credit_name"
             app:layout_constraintLeft_toLeftOf="parent"/>
 
         <TextView
             android:id="@+id/amount"
-            android:layout_width="100dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:gravity="right"
             android:textStyle="bold"
             android:textSize="17sp"
             app:layout_constraintTop_toBottomOf="@+id/linear_layout_1"
             app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:id="@+id/paid"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="Paid: Ksh50"
+            android:textSize="16sp"
+            android:textColor="@color/greenColor"
+            app:layout_constraintTop_toBottomOf="@+id/amount"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:id="@+id/balance"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="Bal: Ksh50"
+            android:textSize="16sp"
+            android:textColor="@color/redColor"
+            app:layout_constraintTop_toBottomOf="@+id/paid"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:id="@+id/type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@{`Type: `+credit.type}"
+            android:textSize="16sp"
+            android:textStyle="italic"
+            app:layout_constraintTop_toBottomOf="@+id/balance"
+            app:layout_constraintLeft_toLeftOf="parent"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

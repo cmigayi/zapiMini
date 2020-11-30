@@ -106,8 +106,13 @@ public class HomeActivity extends AppCompatActivity
                 intent.putExtra("activity", "Reports");
                 startActivity(intent);
                 break;
-            case R.id.credit_report:
+            case R.id.receivable_credit_report:
                 intent = new Intent(HomeActivity.this, CreditsReportActivity.class);
+                intent.putExtra("activity", "Reports");
+                startActivity(intent);
+                break;
+            case R.id.payable_credit_report:
+                intent = new Intent(HomeActivity.this, PayableCreditsReportActivity.class);
                 intent.putExtra("activity", "Reports");
                 startActivity(intent);
                 break;

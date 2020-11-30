@@ -34,7 +34,13 @@ public class DatePickerFragment extends DialogFragment
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
         // Do something with the date chosen by the use
-        String date = year+"-0"+(month+1)+"-"+day;
+        String date;
+        if(String.valueOf(month).length() == 1){
+            date = year+"-0"+(month+1)+"-"+day;
+        }else{
+            date = year+"-"+(month+1)+"-"+day;
+        }
+
         Log.d("DateItem",date);
         Intent intent = new Intent(
                 getActivity(), mActivity);

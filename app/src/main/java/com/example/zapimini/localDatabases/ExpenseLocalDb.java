@@ -21,7 +21,7 @@ public class ExpenseLocalDb implements ExpenseRepository {
     }
 
     @Override
-    public void createExpense(Expense expense, ProgressBar progressBar, OnFinishedListerner onFinishedListerner) {
+    public void createExpense(Expense expense, OnFinishedListerner onFinishedListerner) {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -35,13 +35,12 @@ public class ExpenseLocalDb implements ExpenseRepository {
                 }catch(Exception e){
                     onFinishedListerner.onFailuire(e);
                 }
-                progressBar.setVisibility(View.GONE);
             }
         });
     }
 
     @Override
-    public void getExpensesByUserId(int userId, ProgressBar progressBar, OnFinishedListerner onFinishedListerner) {
+    public void getExpensesByUserId(int userId, OnFinishedListerner onFinishedListerner) {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -51,15 +50,12 @@ public class ExpenseLocalDb implements ExpenseRepository {
                 }catch(Exception e){
                     onFinishedListerner.onFailuire(e);
                 }
-                if(progressBar != null){
-                    progressBar.setVisibility(View.GONE);
-                }
             }
         });
     }
 
     @Override
-    public void getExpensesByUserIdByDate(int userId, String date, ProgressBar progressBar, OnFinishedListerner onFinishedListerner) {
+    public void getExpensesByUserIdByDate(int userId, String date, OnFinishedListerner onFinishedListerner) {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -70,15 +66,12 @@ public class ExpenseLocalDb implements ExpenseRepository {
                 }catch(Exception e){
                     onFinishedListerner.onFailuire(e);
                 }
-                if(progressBar != null) {
-                    progressBar.setVisibility(View.GONE);
-                }
             }
         });
     }
 
     @Override
-    public void updateExpense(Expense expense, ProgressBar progressBar, OnFinishedListerner onFinishedListerner) {
+    public void updateExpense(Expense expense, OnFinishedListerner onFinishedListerner) {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -88,13 +81,12 @@ public class ExpenseLocalDb implements ExpenseRepository {
                 }catch(Exception e){
                     onFinishedListerner.onFailuire(e);
                 }
-                progressBar.setVisibility(View.GONE);
             }
         });
     }
 
     @Override
-    public void deleteExpense(Expense expense, ProgressBar progressBar, OnFinishedListerner onFinishedListerner) {
+    public void deleteExpense(Expense expense, OnFinishedListerner onFinishedListerner) {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -104,7 +96,6 @@ public class ExpenseLocalDb implements ExpenseRepository {
                 }catch(Exception e){
                     onFinishedListerner.onFailuire(e);
                 }
-                progressBar.setVisibility(View.GONE);
             }
         });
     }

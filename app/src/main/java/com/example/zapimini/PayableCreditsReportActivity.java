@@ -29,25 +29,27 @@ import com.example.zapimini.commons.MoneyUtils;
 import com.example.zapimini.data.Credit;
 import com.example.zapimini.data.User;
 import com.example.zapimini.databinding.ActivityCreditsReportBinding;
+import com.example.zapimini.databinding.ActivityPayableCreditsReportBinding;
 import com.example.zapimini.localDatabases.CreditLocalDb;
 import com.example.zapimini.localStorage.UserLocalStorage;
 import com.example.zapimini.presenters.CreditReportActivityPresenter;
+import com.example.zapimini.presenters.PayableCreditReportActivityPresenter;
 import com.example.zapimini.views.CreditReportActivityView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreditsReportActivity extends AppCompatActivity
+public class PayableCreditsReportActivity extends AppCompatActivity
         implements View.OnClickListener, CreditReportActivityView,
-        CustomCreditReportAdapter.OnCreditReportListener {
-    final static String mCreditReportActivity = "CreditReportActivity";
-    ActivityCreditsReportBinding activityCreditReportBinding;
+        CustomCreditReportAdapter.OnCreditReportListener{
+    final static String mCreditReportActivity = "PayableCreditActivity";
+    ActivityPayableCreditsReportBinding activityPayableCreditsReportBinding;
 
-    static Activity aCreditsReportActivity;
+    static Activity aPayableCreditsReportActivity;
     List<Credit> creditlist2 = new ArrayList<>();
 
-    CreditReportActivityPresenter presenter;
+    PayableCreditReportActivityPresenter presenter;
 
     String selectedDate;
 
@@ -57,16 +59,18 @@ public class CreditsReportActivity extends AppCompatActivity
     User user;
     Toolbar toolbar;
 
+    String type;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityCreditReportBinding = DataBindingUtil.setContentView(
-                this, R.layout.activity_credits_report);
+        activityPayableCreditsReportBinding = DataBindingUtil.setContentView(
+                this, R.layout.activity_payable_credits_report);
 
-        aCreditsReportActivity = this;
+        aPayableCreditsReportActivity = this;
 
         toolbar = findViewById(R.id.tool_bar);
-        toolbar.setTitle("Receivable Credit: ");
+        toolbar.setTitle("Payable Credit: ");
         setSupportActionBar(toolbar);
 
         // add back arrow to toolbar
@@ -79,8 +83,9 @@ public class CreditsReportActivity extends AppCompatActivity
         user = userLocalStorage.getLoggedInUser();
 
         CreditLocalDb creditLocalDb = new CreditLocalDb(this);
-        presenter = new CreditReportActivityPresenter(creditLocalDb,this);
+        presenter = new PayableCreditReportActivityPresenter(creditLocalDb,this);
 
+        type = getIntent().getStringExtra("type");
         selectedDate = "";
         if(getIntent().getStringExtra("date") == null){
             reportByFilter("all", "");
@@ -109,27 +114,27 @@ public class CreditsReportActivity extends AppCompatActivity
         switch(id){
             case R.id.all:
                 intent = new Intent(
-                        CreditsReportActivity.this, CreditsReportActivity.class);
+                        PayableCreditsReportActivity.this, PayableCreditsReportActivity.class);
                 intent.putExtra("all", "");
                 startActivity(intent);
                 finish();
                 break;
             case R.id.today:
                 intent = new Intent(
-                        CreditsReportActivity.this, CreditsReportActivity.class);
+                        PayableCreditsReportActivity.this, PayableCreditsReportActivity.class);
                 intent.putExtra("date", new DateTimeUtils().getTodayDate());
                 startActivity(intent);
                 finish();
                 break;
             case R.id.yesterday:
                 intent = new Intent(
-                        CreditsReportActivity.this, CreditsReportActivity.class);
+                        PayableCreditsReportActivity.this, PayableCreditsReportActivity.class);
                 intent.putExtra("date", new DateTimeUtils().getYesterdayDate());
                 startActivity(intent);
                 finish();
                 break;
             case R.id.pick_date:
-                DialogFragment newFragment = new DatePickerFragment(CreditsReportActivity.class);
+                DialogFragment newFragment = new DatePickerFragment(PayableCreditsReportActivity.class);
                 newFragment.show(getSupportFragmentManager(), "datePicker");
                 break;
             case R.id.export:
@@ -150,13 +155,13 @@ public class CreditsReportActivity extends AppCompatActivity
 
     @Override
     public ProgressBar getProgressbar() {
-        return activityCreditReportBinding.progressBar;
+        return activityPayableCreditsReportBinding.progressBar;
     }
 
     @Override
     public void authUser(UserLocalStorage userLocalStorage) {
         if(!userLocalStorage.isUserLogged()){
-            intent = new Intent(CreditsReportActivity.this, LoginActivity.class);
+            intent = new Intent(PayableCreditsReportActivity.this, LoginActivity.class);
             startActivity(intent);
         }
     }
@@ -164,23 +169,24 @@ public class CreditsReportActivity extends AppCompatActivity
     @Override
     public void displayCreditlist(String filter, List<Credit> creditlist) {
         creditlist2 = creditlist;
+        activityPayableCreditsReportBinding.pageTitle.setText(filter);
+
         if(creditlist.size() > 0){
             String amount = new MoneyUtils().AddMoneyFormat(
                     new CreditCalculation().getTotalCreditAmount(creditlist));
-            toolbar.setTitle("Receivables: ("+creditlist.size()+ ")");
-            activityCreditReportBinding.pageTitle.setText(filter);
-            activityCreditReportBinding.amountTv.setText(""+amount);
-            activityCreditReportBinding.recyclerView.setHasFixedSize(true);
+            toolbar.setTitle("Payables: ("+creditlist.size()+ ")");
+            activityPayableCreditsReportBinding.amountTv.setText(""+amount);
+            activityPayableCreditsReportBinding.recyclerView.setHasFixedSize(true);
             // use a linear layout manager
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-            activityCreditReportBinding.recyclerView.setLayoutManager(layoutManager);
-            activityCreditReportBinding.recyclerView.addItemDecoration(
+            activityPayableCreditsReportBinding.recyclerView.setLayoutManager(layoutManager);
+            activityPayableCreditsReportBinding.recyclerView.addItemDecoration(
                     new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
             CustomCreditReportAdapter customCreditReportAdapter =
                     new CustomCreditReportAdapter(this, creditlist, this);
 
-            activityCreditReportBinding.recyclerView.setAdapter(customCreditReportAdapter);
+            activityPayableCreditsReportBinding.recyclerView.setAdapter(customCreditReportAdapter);
         }else{
             displayError("Nothing was posted");
         }
@@ -190,20 +196,20 @@ public class CreditsReportActivity extends AppCompatActivity
     public void reportByFilter(String filter, String date) {
         switch(filter){
             case "date":
-                presenter.getReceivableCreditByUserIdByTypeByDate(user.getId(), date);
+                presenter.getPayableCreditByUserIdByTypeByDate(user.getId(), date);
                 break;
             case "all":
-                presenter.getReceivableCreditByUserIdByType(user.getId());
+                presenter.getPayableCreditByUserIdByType(user.getId());
                 break;
         }
     }
 
     @Override
     public void displayError(String message) {
-        activityCreditReportBinding.errorTv.setVisibility(View.VISIBLE);
-        activityCreditReportBinding.recyclerView.setVisibility(View.GONE);
-        activityCreditReportBinding.progressBar.setVisibility(View.GONE);
-        activityCreditReportBinding.errorTv.setText(message);
+        activityPayableCreditsReportBinding.errorTv.setVisibility(View.VISIBLE);
+        activityPayableCreditsReportBinding.recyclerView.setVisibility(View.GONE);
+        activityPayableCreditsReportBinding.progressBar.setVisibility(View.GONE);
+        activityPayableCreditsReportBinding.errorTv.setText(message);
     }
 
     @Override
@@ -231,15 +237,16 @@ public class CreditsReportActivity extends AppCompatActivity
                 switch (which){
                     case 0:
                         Log.d(mCreditReportActivity, "credit clicked: "+position);
-                        intent = new Intent(CreditsReportActivity.this, CreditItemReportActivity.class);
+                        intent = new Intent(PayableCreditsReportActivity.this,
+                                CreditItemReportActivity.class);
 
                         intent.putExtra("creditDataList", (Serializable) creditDataList);
                         startActivity(intent);
                         break;
                     case 1:
-                        intent = new Intent(CreditsReportActivity.this,
+                        intent = new Intent(PayableCreditsReportActivity.this,
                                 CreditItemPaidConfirmationActivity.class);
-
+                        intent.putExtra("type", "payable");
                         intent.putExtra("creditDataList", (Serializable) creditDataList);
                         startActivity(intent);
                         break;

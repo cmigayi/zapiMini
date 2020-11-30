@@ -5,7 +5,7 @@ import com.example.zapimini.data.Credit;
 import java.util.List;
 
 public class CreditCalculation {
-    double amount = 0.0;
+    double amount = 0.0, balance = 0.0;
 
     public double getTotalCreditAmount(List<Credit> creditlist){
         try{
@@ -17,5 +17,10 @@ public class CreditCalculation {
             amount = 0.0;
         }
         return amount;
+    }
+
+    public double getCreditBalance(double creditAmount, double paidAmount){
+        balance = creditAmount - paidAmount;
+        return balance;
     }
 }

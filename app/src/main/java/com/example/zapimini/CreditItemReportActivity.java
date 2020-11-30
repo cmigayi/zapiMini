@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.example.zapimini.commons.CreditCalculation;
 import com.example.zapimini.data.Credit;
 import com.example.zapimini.databinding.ActivityCreditItemBinding;
 import com.example.zapimini.localDatabases.CreditLocalDb;
@@ -59,8 +60,10 @@ public class CreditItemReportActivity extends AppCompatActivity
                 creditDataList.get(3),
                 creditDataList.get(4),
                 Double.parseDouble(creditDataList.get(5)),
-                creditDataList.get(6),
-                creditDataList.get(7)
+                Double.parseDouble(creditDataList.get(6)),
+                Double.parseDouble(creditDataList.get(7)),
+                creditDataList.get(8),
+                creditDataList.get(9)
         );
         loadCreditToFields(importedCredit);
 
@@ -82,14 +85,22 @@ public class CreditItemReportActivity extends AppCompatActivity
     @Override
     public void onClick(View v) {
         activityCreditItemBinding.contraint1.setVisibility(View.GONE);
+
+        double creditAmount = Double.parseDouble(activityCreditItemBinding.amount.getText().toString());
+        double balance = new CreditCalculation().getCreditBalance(
+                creditAmount, importedCredit.getPaidAmount()
+        );
+
         Credit credit = new Credit(
                 importedCredit.getId(),
                 importedCredit.getBusinessId(),
                 importedCredit.getUserId(),
                 activityCreditItemBinding.name.getText().toString(),
                 activityCreditItemBinding.phone.getText().toString(),
-                Double.parseDouble(activityCreditItemBinding.amount.getText().toString()),
-                "",
+                creditAmount,
+                importedCredit.getPaidAmount(),
+                balance,
+                importedCredit.getType(),
                 importedCredit.getDateTime()
         );
 
@@ -138,7 +149,7 @@ public class CreditItemReportActivity extends AppCompatActivity
         try{
             Log.d(mCreditItemActivity, "Done");
             intent = new Intent(CreditItemReportActivity.this, CreditItemReportConfirmationActivity.class);
-            intent.putExtra("message", "You have updated this credit successfully!");
+            intent.putExtra("message", "You have deleted this credit successfully!");
             intent.putExtra("message_2", "Credit: "+credit.getName()+
                     ", Fare: ksh."+credit.getAmount());
             startActivity(intent);

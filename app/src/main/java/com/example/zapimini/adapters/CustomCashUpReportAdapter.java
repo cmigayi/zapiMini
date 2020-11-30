@@ -48,6 +48,10 @@ public class CustomCashUpReportAdapter extends
         cashUp.setDateTime(dateWithoutTime);
         holder.binding.setCashup(cashUp);
         holder.binding.amount.setText(new MoneyUtils().AddMoneyFormat(cashUp.getAmount()));
+
+        if(cashUp.getCreditId() != -1){
+            holder.binding.creditTicker.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

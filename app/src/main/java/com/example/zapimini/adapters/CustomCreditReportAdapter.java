@@ -50,6 +50,8 @@ public class CustomCreditReportAdapter extends
         credit.setDateTime(dateWithoutTime);
         holder.binding.setCredit(credit);
         holder.binding.amount.setText(new MoneyUtils().AddMoneyFormat(credit.getAmount()));
+        holder.binding.paid.setText("Paid: "+new MoneyUtils().AddMoneyFormat(credit.getPaidAmount()));
+        holder.binding.balance.setText("Bal: "+new MoneyUtils().AddMoneyFormat(credit.getBalance()));
     }
 
     @Override

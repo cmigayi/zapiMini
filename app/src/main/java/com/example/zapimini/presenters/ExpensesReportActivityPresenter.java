@@ -20,7 +20,7 @@ public class ExpensesReportActivityPresenter {
     }
 
     public void getExpensesByUserId(int userId){
-        repository.getExpensesByUserId(userId, view.getProgressbar(), new ExpenseRepository.OnFinishedListerner() {
+        repository.getExpensesByUserId(userId, new ExpenseRepository.OnFinishedListerner() {
             @Override
             public void onFinished(List<Expense> expenselist) {
                 AppExecutors.getInstance().mainThread().execute(new Runnable() {
@@ -51,7 +51,7 @@ public class ExpensesReportActivityPresenter {
     }
 
     public void getExpensesByUserIdByDate(int userId, String date){
-        repository.getExpensesByUserIdByDate(userId, date, view.getProgressbar(), new ExpenseRepository.OnFinishedListerner() {
+        repository.getExpensesByUserIdByDate(userId, date, new ExpenseRepository.OnFinishedListerner() {
             @Override
             public void onFinished(List<Expense> expenselist) {
                 AppExecutors.getInstance().mainThread().execute(new Runnable() {

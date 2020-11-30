@@ -14,15 +14,17 @@ public class AddCreditConfirmationActivity extends AppCompatActivity implements 
     ActivityAddCreditConfirmationBinding activityAddCreditConfirmationBinding;
     Intent intent;
 
+    String success, transaction, type;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityAddCreditConfirmationBinding = DataBindingUtil.setContentView(
                 this, R.layout.activity_add_credit_confirmation);
-        String success, transaction;
 
         success = getIntent().getStringExtra("message");
         transaction = getIntent().getStringExtra("message_2");
+        type = getIntent().getStringExtra("type");
         activityAddCreditConfirmationBinding.successTv.setText(success);
         activityAddCreditConfirmationBinding.transactionTv.setText(transaction);
         activityAddCreditConfirmationBinding.addAnother.setOnClickListener(this);
@@ -39,15 +41,22 @@ public class AddCreditConfirmationActivity extends AppCompatActivity implements 
         switch( v.getId()){
             case R.id.add_another:
                 intent = new Intent(AddCreditConfirmationActivity.this,
-                        AddNonRecurringExpenseActivity.class);
+                        AddCreditActivity.class);
                 startActivity(intent);
                 finish();
                 break;
             case R.id.credit_report:
-                intent = new Intent(AddCreditConfirmationActivity.this,
-                        CreditsReportActivity.class);
-                startActivity(intent);
-                finish();
+                if(type.equals("This business or person owes me or my business money (Receivable).")){
+                    intent = new Intent(AddCreditConfirmationActivity.this,
+                            CreditsReportActivity.class);
+                    startActivity(intent);
+                    finish();
+                }else{
+                    intent = new Intent(AddCreditConfirmationActivity.this,
+                            PayableCreditsReportActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
                 break;
         }
 

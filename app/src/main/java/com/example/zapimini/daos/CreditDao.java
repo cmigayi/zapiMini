@@ -28,9 +28,9 @@ public interface CreditDao {
     @Query("select * from credits order by id desc limit 1 ")
     public List<Credit> getLastInsertedCredit();
 
-    @Query("select * from credits where user_id = :userId order by id desc")
-    public List<Credit> getCreditsByUserId(int userId);
+    @Query("select * from credits where user_id = :userId and type = :type order by id desc")
+    public List<Credit> getCreditsByUserIdByType(int userId, String type);
 
-    @Query("select * from credits where user_id = :userId and date_time between :dateFrom and :dateTo order by id desc")
-    public List<Credit> getCreditsByUserIdByDate(int userId, String dateFrom, String dateTo);
+    @Query("select * from credits where user_id = :userId and type = :type and date_time between :dateFrom and :dateTo order by id desc")
+    public List<Credit> getCreditsByUserIdByTypeByDate(int userId, String type, String dateFrom, String dateTo);
 }

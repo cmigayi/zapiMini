@@ -20,8 +20,11 @@ public class CreditReportActivityPresenter {
         this.view = view;
     }
 
-    public void getCreditByUserIdByDate(int userId, String date){
-        repository.getCreditByUserIdByDate(userId, date, view.getProgressbar(), new CreditRepository.OnFinishedListerner() {
+    public void getReceivableCreditByUserIdByTypeByDate(int userId, String date){
+        repository.getCreditByUserIdByTypeByDate(userId,
+                "This business or person owes me or my business money (Receivable).",
+                date,
+                new CreditRepository.OnFinishedListerner() {
             @Override
             public void onFinished(List<Credit> creditlist) {
                 AppExecutors.getInstance().mainThread().execute(new Runnable() {
@@ -51,8 +54,10 @@ public class CreditReportActivityPresenter {
         });
     }
 
-    public void getCreditByUserId(int userId){
-        repository.getCreditByUserId(userId, view.getProgressbar(), new CreditRepository.OnFinishedListerner() {
+    public void getReceivableCreditByUserIdByType(int userId){
+        repository.getCreditByUserIdByType(userId,
+                "This business or person owes me or my business money (Receivable).",
+                new CreditRepository.OnFinishedListerner() {
             @Override
             public void onFinished(List<Credit> creditlist) {
                 AppExecutors.getInstance().mainThread().execute(new Runnable() {

@@ -14,14 +14,14 @@ public interface ExpenseRepository {
         void onFailuire(Throwable t);
     }
 
-    public void createExpense(Expense expense, ProgressBar progressBar, OnFinishedListerner onFinishedListerner);
+    public void createExpense(Expense expense, OnFinishedListerner onFinishedListerner);
 
-    public void getExpensesByUserId(int userId, ProgressBar progressBar, OnFinishedListerner onFinishedListerner);
+    public void getExpensesByUserId(int userId, OnFinishedListerner onFinishedListerner);
 
-    public void getExpensesByUserIdByDate(int userId, String date, ProgressBar progressBar, OnFinishedListerner onFinishedListerner);
+    public void getExpensesByUserIdByDate(int userId, String date, OnFinishedListerner onFinishedListerner);
 
-    public void updateExpense(Expense expense, ProgressBar progressBar, OnFinishedListerner onFinishedListerner);
+    public void updateExpense(Expense expense, OnFinishedListerner onFinishedListerner);
 
-    public void deleteExpense(Expense expense, ProgressBar progressBar, OnFinishedListerner onFinishedListerner);
+    public void deleteExpense(Expense expense, OnFinishedListerner onFinishedListerner);
 
 }

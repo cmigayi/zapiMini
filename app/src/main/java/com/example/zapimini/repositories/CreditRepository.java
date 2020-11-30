@@ -14,16 +14,13 @@ public interface CreditRepository {
         void onFailuire(Throwable t);
     }
 
-    public void createCredit(Credit credit, ProgressBar progressBar,
-                             OnFinishedListerner onFinishedListerner);
+    public void createCredit(Credit credit, OnFinishedListerner onFinishedListerner);
 
-    public void getCreditByUserId(int userId, ProgressBar progressBar,
-                             OnFinishedListerner onFinishedListerner);
+    public void getCreditByUserIdByType(int userId, String type, OnFinishedListerner onFinishedListerner);
 
-    public void getCreditByUserIdByDate(int userId, String date, ProgressBar progressBar,
-                                  OnFinishedListerner onFinishedListerner);
+    public void getCreditByUserIdByTypeByDate(int userId, String type, String date, OnFinishedListerner onFinishedListerner);
 
-    public void updateCredit(Credit credit, ProgressBar progressBar, OnFinishedListerner onFinishedListerner);
+    public void updateCredit(Credit credit, OnFinishedListerner onFinishedListerner);
 
-    public void deleteCredit(Credit credit, ProgressBar progressBar, OnFinishedListerner onFinishedListerner);
+    public void deleteCredit(Credit credit, OnFinishedListerner onFinishedListerner);
 }

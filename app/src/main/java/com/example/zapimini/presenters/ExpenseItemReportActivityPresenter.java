@@ -26,7 +26,7 @@ public class ExpenseItemReportActivityPresenter {
     }
 
     public void updateExpenseInLocalDb(Expense newExpense, Expense oldExpense, Context context){
-        repository.updateExpense(newExpense, view.getProgressbar(), new ExpenseRepository.OnFinishedListerner() {
+        repository.updateExpense(newExpense, new ExpenseRepository.OnFinishedListerner() {
             @Override
             public void onFinished(List<Expense> expenselist) {
 
@@ -102,7 +102,7 @@ public class ExpenseItemReportActivityPresenter {
     }
 
     public void deleteExpenseInLocalDb(Expense expense, Context context){
-        repository.deleteExpense(expense, view.getProgressbar(), new ExpenseRepository.OnFinishedListerner() {
+        repository.deleteExpense(expense, new ExpenseRepository.OnFinishedListerner() {
             @Override
             public void onFinished(List<Expense> expenselist) {
 

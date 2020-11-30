@@ -7,7 +7,7 @@ import com.example.zapimini.localStorage.UserLocalStorage;
 
 public interface CreditItemPaidConfirmationActivityView {
     public ProgressBar getProgressbar();
-    public void authUser(UserLocalStorage userLocalStorage);
+    public void authUser();
     public void onCreditPaidConfirmed(Credit credit);
     public void displayError(String message);
 }

@@ -25,20 +25,28 @@ public class Credit {
     @ColumnInfo(name = "amount")
     double amount;
 
+    @ColumnInfo(name = "paid_amount")
+    double paidAmount;
+
+    @ColumnInfo(name = "balance")
+    double balance;
+
     @ColumnInfo(name = "type")
     String type;
 
     @ColumnInfo(name = "date_time")
     String dateTime;
 
-    public Credit(int id, int userId, int businessId, String name, String phone,
-                  double amount, String type, String dateTime) {
+    public Credit(int id, int userId, int businessId, String name, String phone, double amount,
+                  double paidAmount, double balance, String type, String dateTime) {
         this.id = id;
         this.userId = userId;
         this.businessId = businessId;
         this.name = name;
         this.phone = phone;
         this.amount = amount;
+        this.paidAmount = paidAmount;
+        this.balance = balance;
         this.type = type;
         this.dateTime = dateTime;
     }
@@ -95,6 +103,22 @@ public class Credit {
         this.amount = amount;
     }
 
+    public double getPaidAmount() {
+        return paidAmount;
+    }
+
+    public void setPaidAmount(double paidAmount) {
+        this.paidAmount = paidAmount;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
     public String getType() {
         return type;
     }
@@ -120,6 +144,8 @@ public class Credit {
                 ", name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
                 ", amount=" + amount +
+                ", paidAmount=" + paidAmount +
+                ", balance=" + balance +
                 ", type='" + type + '\'' +
                 ", dateTime='" + dateTime + '\'' +
                 '}';

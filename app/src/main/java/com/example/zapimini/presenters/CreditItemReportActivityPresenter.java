@@ -22,7 +22,7 @@ public class CreditItemReportActivityPresenter {
     }
 
     public void updateCredit(Credit credit){
-        repository.updateCredit(credit, view.getProgressbar(), new CreditRepository.OnFinishedListerner() {
+        repository.updateCredit(credit, new CreditRepository.OnFinishedListerner() {
             @Override
             public void onFinished(List<Credit> creditlist) {
 
@@ -58,7 +58,7 @@ public class CreditItemReportActivityPresenter {
     }
 
     public void deleteCredit(Credit credit){
-        repository.deleteCredit(credit, view.getProgressbar(), new CreditRepository.OnFinishedListerner() {
+        repository.deleteCredit(credit, new CreditRepository.OnFinishedListerner() {
             @Override
             public void onFinished(List<Credit> creditlist) {
 

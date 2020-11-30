@@ -27,7 +27,7 @@ public class AddNonRecurringExpenseActivityPresenter {
     }
 
     public void createNonRecurringExpenseInLocalDb(Expense expense, Context context){
-        repository.createExpense(expense, view.getProgressbar(), new ExpenseRepository.OnFinishedListerner() {
+        repository.createExpense(expense, new ExpenseRepository.OnFinishedListerner() {
             @Override
             public void onFinished(List<Expense> expenselist) {
                 IncomeLocalDb incomeLocalDb = new IncomeLocalDb(context);

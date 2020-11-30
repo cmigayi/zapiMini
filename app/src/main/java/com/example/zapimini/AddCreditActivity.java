@@ -21,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.example.zapimini.commons.CreditCalculation;
 import com.example.zapimini.commons.DateTimeUtils;
 import com.example.zapimini.data.Business;
 import com.example.zapimini.data.Credit;
@@ -104,13 +105,21 @@ public class AddCreditActivity extends AppCompatActivity
                     BusinessLocalStorage businessLocalStorage = new BusinessLocalStorage(this);
                     Business business = businessLocalStorage.getBusiness();
 
+                    double creditAmount = Double.parseDouble(activityAddCreditBinding.amountValue.
+                            getText().toString());
+                    double balance = new CreditCalculation().getCreditBalance(
+                           creditAmount, 0.0
+                    );
+
                     Credit credit = new Credit(
                             0,
                             business.getId(),
                             user.getId(),
                             activityAddCreditBinding.name.getText().toString(),
                             activityAddCreditBinding.phone.getText().toString(),
-                            Double.parseDouble(activityAddCreditBinding.amountValue.getText().toString()),
+                            creditAmount,
+                            0.0,
+                            balance,
                             selectedCreditOption(activityAddCreditBinding.creditOptions),
                             new DateTimeUtils().getTodayDateTime()
                     );
@@ -198,6 +207,7 @@ public class AddCreditActivity extends AppCompatActivity
             intent.putExtra("message", "You have added this credit to expense reports successfully!");
             intent.putExtra("message_2", "Item: "+credit.getName()+", "+
                     credit.getPhone()+", Amount: ksh."+credit.getAmount());
+            intent.putExtra("type", credit.getType());
             startActivity(intent);
             finish();
         }catch(Exception e){

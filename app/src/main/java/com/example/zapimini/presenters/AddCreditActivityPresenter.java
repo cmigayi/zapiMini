@@ -20,7 +20,7 @@ public class AddCreditActivityPresenter {
     }
 
     public void createCredit(Credit credit){
-        repository.createCredit(credit, view.getProgressbar(), new CreditRepository.OnFinishedListerner() {
+        repository.createCredit(credit, new CreditRepository.OnFinishedListerner() {
             @Override
             public void onFinished(List<Credit> creditlist) {
                 AppExecutors.getInstance().mainThread().execute(new Runnable() {

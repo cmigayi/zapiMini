@@ -21,7 +21,7 @@ public class CreditLocalDb implements CreditRepository {
     }
 
     @Override
-    public void createCredit(Credit credit, ProgressBar progressBar, OnFinishedListerner onFinishedListerner) {
+    public void createCredit(Credit credit, OnFinishedListerner onFinishedListerner) {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -35,18 +35,17 @@ public class CreditLocalDb implements CreditRepository {
                 }catch(Exception e){
                     onFinishedListerner.onFailuire(e);
                 }
-                progressBar.setVisibility(View.GONE);
             }
         });
     }
 
     @Override
-    public void getCreditByUserId(int userId, ProgressBar progressBar, OnFinishedListerner onFinishedListerner) {
+    public void getCreditByUserIdByType(int userId, String type, OnFinishedListerner onFinishedListerner) {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
                 try{
-                    List<Credit> creditList = creditDaoDatabase.creditDao().getCreditsByUserId(userId);
+                    List<Credit> creditList = creditDaoDatabase.creditDao().getCreditsByUserIdByType(userId, type);
                     onFinishedListerner.onFinished(creditList);
                 }catch(Exception e){
                     onFinishedListerner.onFailuire(e);
@@ -56,27 +55,24 @@ public class CreditLocalDb implements CreditRepository {
     }
 
     @Override
-    public void getCreditByUserIdByDate(int userId, String date, ProgressBar progressBar, OnFinishedListerner onFinishedListerner) {
+    public void getCreditByUserIdByTypeByDate(int userId, String type, String date, OnFinishedListerner onFinishedListerner) {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
                 try{
                     String dateTo = date +" 23:59:59";
                     List<Credit> expenseList = creditDaoDatabase.creditDao()
-                            .getCreditsByUserIdByDate(userId, date, dateTo);
+                            .getCreditsByUserIdByTypeByDate(userId, type, date, dateTo);
                     onFinishedListerner.onFinished(expenseList);
                 }catch(Exception e){
                     onFinishedListerner.onFailuire(e);
-                }
-                if(progressBar != null) {
-                    progressBar.setVisibility(View.GONE);
                 }
             }
         });
     }
 
     @Override
-    public void updateCredit(Credit credit, ProgressBar progressBar, OnFinishedListerner onFinishedListerner) {
+    public void updateCredit(Credit credit, OnFinishedListerner onFinishedListerner) {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -91,7 +87,7 @@ public class CreditLocalDb implements CreditRepository {
     }
 
     @Override
-    public void deleteCredit(Credit credit, ProgressBar progressBar, OnFinishedListerner onFinishedListerner) {
+    public void deleteCredit(Credit credit, OnFinishedListerner onFinishedListerner) {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {

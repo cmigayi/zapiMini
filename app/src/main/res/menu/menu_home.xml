@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/cash_up_report" android:title="Cashup report" app:showAsAction="never"/>
     <item android:id="@+id/expense_report" android:title="Expense report" app:showAsAction="never"/>
-    <item android:id="@+id/credit_report" android:title="Credit report" app:showAsAction="never"/>
+    <item android:id="@+id/receivable_credit_report" android:title="Receivable credit" app:showAsAction="never"/>
+    <item android:id="@+id/payable_credit_report" android:title="Payable credit" app:showAsAction="never"/>
     <item android:id="@+id/income_report" android:title="Income report" app:showAsAction="never"/>
 </menu>
