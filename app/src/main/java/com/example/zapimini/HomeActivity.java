@@ -22,6 +22,7 @@ import com.example.zapimini.commons.DateTimeUtils;
 import com.example.zapimini.commons.MoneyUtils;
 import com.example.zapimini.data.User;
 import com.example.zapimini.databinding.ActivityHomeBinding;
+import com.example.zapimini.localDatabases.CreditLocalDb;
 import com.example.zapimini.localDatabases.IncomeLocalDb;
 import com.example.zapimini.localStorage.UserLocalStorage;
 import com.example.zapimini.presenters.HomeActivityPresenter;
@@ -57,9 +58,8 @@ public class HomeActivity extends AppCompatActivity
         authUser(userLocalStorage);
         user = userLocalStorage.getLoggedInUser();
 
-        IncomeLocalDb incomeLocalDb = new IncomeLocalDb(this);
-
-        presenter = new HomeActivityPresenter(incomeLocalDb, this);
+        presenter = new HomeActivityPresenter(new IncomeLocalDb(this),
+                new CreditLocalDb(this), this);
 
         activityHomeBinding.addItemBtn.setOnClickListener(this);
         activityHomeBinding.cashUpBtn.setOnClickListener(this);
@@ -77,6 +77,9 @@ public class HomeActivity extends AppCompatActivity
                             public void run() {
                                 presenter.loadIncome(user.getId(), new DateTimeUtils().getTodayDate());
                                 presenter.loadOverallNetIncome(user.getId());
+                                presenter.loadCredit(
+                                        user.getId(),
+                                        "I owe this business, supplier or person money (Payable).");
                             }
                         });
                     }
@@ -135,10 +138,10 @@ public class HomeActivity extends AppCompatActivity
 //                intent = new Intent(HomeActivity.this, BusinessProfileActivity.class);
 //                startActivity(intent);
 //                break;
-//            case R.id.settings:
-//                intent = new Intent(HomeActivity.this, SettingsActivity.class);
-//                startActivity(intent);
-//                break;
+            case R.id.settings:
+                intent = new Intent(HomeActivity.this, SettingsActivity.class);
+                startActivity(intent);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -202,6 +205,11 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public void updateGrossAmount(double amount) {
         activityHomeBinding.grossAmount.setText(new MoneyUtils().AddMoneyFormat(amount));
+    }
+
+    @Override
+    public void updateCreditAmount(double amount) {
+        activityHomeBinding.creditAmount.setText(new MoneyUtils().AddMoneyFormat(amount));
     }
 
     @Override

@@ -6,4 +6,5 @@
     <item android:id="@+id/receivable_credit_report" android:title="Receivable credit" app:showAsAction="never"/>
     <item android:id="@+id/payable_credit_report" android:title="Payable credit" app:showAsAction="never"/>
     <item android:id="@+id/income_report" android:title="Income report" app:showAsAction="never"/>
+    <item android:id="@+id/settings" android:title="Settings" app:showAsAction="never"/>
 </menu>

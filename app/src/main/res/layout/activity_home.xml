@@ -69,7 +69,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
                             android:textStyle="bold"
-                            android:text="Income (Ksh)"
+                            android:text="Today Income (Ksh)"
                             android:textSize="18sp"
                             android:textColor="@color/colorPrimaryDark"
                             app:layout_constraintTop_toTopOf="parent"
@@ -176,7 +176,7 @@
                             android:layout_marginTop="5dp"
                             android:textSize="20sp"
                             android:textColor="#8d694d"
-                            android:text="Credit (Owes):"
+                            android:text="Payable Credit:"
                             app:layout_constraintTop_toBottomOf="@+id/view4"
                             app:layout_constraintLeft_toLeftOf="parent"/>
 

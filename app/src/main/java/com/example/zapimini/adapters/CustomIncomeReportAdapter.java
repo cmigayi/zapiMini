@@ -46,11 +46,11 @@ public class CustomIncomeReportAdapter extends
         income.setDateTime(dateWithoutTime);
         holder.binding.setIncome(income);
         holder.binding.grossAmount.setText(
-                "Gross: ksh."+new MoneyUtils().AddMoneyFormat(income.getGrossAmount()));
+                "Gross: "+new MoneyUtils().AddMoneyFormat(income.getGrossAmount()));
         holder.binding.totalExpense.setText(
-                "Expense: ksh."+new MoneyUtils().AddMoneyFormat(income.getTotalExpense()));
+                "Expense: "+new MoneyUtils().AddMoneyFormat(income.getTotalExpense()));
         holder.binding.netAmount.setText(
-                "Net: ksh."+new MoneyUtils().AddMoneyFormat(income.getNetAmount()));
+                "Net: "+new MoneyUtils().AddMoneyFormat(income.getNetAmount()));
     }
 
     @Override

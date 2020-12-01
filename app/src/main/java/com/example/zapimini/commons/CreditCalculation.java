@@ -23,4 +23,5 @@ public class CreditCalculation {
         balance = creditAmount - paidAmount;
         return balance;
     }
+
 }
