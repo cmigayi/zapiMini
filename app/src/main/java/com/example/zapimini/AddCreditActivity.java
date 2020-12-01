@@ -4,14 +4,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
@@ -20,6 +25,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.example.zapimini.commons.CreditCalculation;
 import com.example.zapimini.commons.DateTimeUtils;
@@ -36,7 +42,8 @@ import com.example.zapimini.views.AddCreditActivityView;
 public class AddCreditActivity extends AppCompatActivity
         implements View.OnClickListener, AddCreditActivityView {
     final static String mAddCreditActivity = "AddAddCreditActivity";
-    public static final int PICK_CONTACT    = 1;
+    public static final int PICK_CONTACT = 1;
+    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
     ActivityAddCreditBinding activityAddCreditBinding;
     Intent intent;
@@ -134,43 +141,6 @@ public class AddCreditActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case (PICK_CONTACT) :
-                if (resultCode == Activity.RESULT_OK) {
-                    Uri contactData = data.getData();
-                    Cursor cursor = getContentResolver().query(contactData, null,
-                            null, null, null);
-                    if (cursor.moveToFirst()) {
-                        String contactId = cursor.getString(cursor.getColumnIndex(
-                                        ContactsContract.Contacts._ID));
-
-                        String phoneName = cursor.getString(cursor.getColumnIndex(
-                                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-
-                        if (Integer.parseInt(cursor.getString(cursor.getColumnIndex(
-                                ContactsContract.CommonDataKinds.Phone.HAS_PHONE_NUMBER))) > 0)
-                        {
-                            Cursor phones = getContentResolver().query(
-                                    ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                                    null,
-                                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID +
-                                            " = " + contactId, null, null);
-
-                            String phoneNumber = phones.getString(cursor.getColumnIndex(
-                                    ContactsContract.CommonDataKinds.Phone.NUMBER));
-
-                            Log.d(mAddCreditActivity, "Contact: "+phoneName+" "+phoneNumber);
-                        }
-                    }
-                    cursor.close();
-                }
-                break;
-        }
-    }
-
-    @Override
     public ProgressBar getProgressbar() {
         return activityAddCreditBinding.progressBar;
     }
@@ -228,5 +198,51 @@ public class AddCreditActivity extends AppCompatActivity
         activityAddCreditBinding.progressBar.setVisibility(View.GONE);
         activityAddCreditBinding.errorTv.setText(message);
         activityAddCreditBinding.errorTv.setVisibility(View.VISIBLE);
+    }
+
+    private void getContact(Uri uri){
+        Cursor cursor = getContentResolver().query(uri,
+                null, null, null, null);
+        if(cursor.moveToFirst()){
+            String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+
+            String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+
+            String hasPhone = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
+
+            if (hasPhone.equalsIgnoreCase("1"))
+            {
+                Cursor phone = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,
+                        ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = "+ id,
+                        null, null);
+                phone.moveToFirst();
+                String phoneNumber = phone.getString(phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+
+//                Log.d(mAddCreditActivity, "Contacts");
+//                Log.d(mAddCreditActivity, "name: "+name);
+//                Log.d(mAddCreditActivity, "number: "+phoneNumber);
+                activityAddCreditBinding.name.setText(name);
+                activityAddCreditBinding.phone.setText(phoneNumber);
+                Toast.makeText(this, name+":"+phoneNumber+" imported", Toast.LENGTH_LONG).show();
+            }
+
+        }else{
+            Log.d(mAddCreditActivity, "No contacts");
+        }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == PICK_CONTACT){
+            switch(resultCode){
+                case RESULT_OK:
+                    // Contact picked
+                    Log.d(mAddCreditActivity, "code: "+data.getData());
+                    getContact(data.getData());
+                    break;
+            }
+        }
     }
 }
