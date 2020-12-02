@@ -82,4 +82,66 @@ public class CashUpsReportActivityPresenter {
             }
         });
     }
+
+    public void getCashUpsByUserIdByDateByPaymentMode(int userId, String date, String paymentMode){
+        repository.getCashUpsByUserIdByDateByPaymentMode(userId, date, paymentMode, new CashUpRepository.OnFinishedListerner() {
+            @Override
+            public void onFinished(List<CashUp> cashUpList) {
+                AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Log.d(mCashUpReportActivityPresenter, "cashuplist: "+cashUpList);
+                            view.displayCashUplist(paymentMode+" + "+date, cashUpList);
+                        }catch(Exception e){
+                            Log.d(mCashUpReportActivityPresenter, "Error: "+e.getMessage());
+                            view.displayError("There could be an error. Please try again!");
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onFinished(Object response) {
+
+            }
+
+            @Override
+            public void onFailuire(Throwable t) {
+                Log.d(mCashUpReportActivityPresenter, "error: "+t.getMessage());
+                view.displayError("There could be an error. Please try again!");
+            }
+        });
+    }
+
+    public void getCashUpsByUserIdByPaymentMode(int userId, String paymentMode){
+        repository.getCashUpsByUserIdByPaymentMode(userId, paymentMode, new CashUpRepository.OnFinishedListerner() {
+            @Override
+            public void onFinished(List<CashUp> cashUpList) {
+                AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Log.d(mCashUpReportActivityPresenter, "cashuplist: " + cashUpList);
+                            view.displayCashUplist(paymentMode, cashUpList);
+                        }catch(Exception e){
+                            Log.d(mCashUpReportActivityPresenter, "Error: "+e.getMessage());
+                            view.displayError("There could be an error. Please try again!");
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onFinished(Object response) {
+
+            }
+
+            @Override
+            public void onFailuire(Throwable t) {
+                Log.d(mCashUpReportActivityPresenter, "error: "+t.getMessage());
+                view.displayError("There could be an error. Please try again!");
+            }
+        });
+    }
 }

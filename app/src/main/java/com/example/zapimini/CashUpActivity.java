@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 
 import com.example.zapimini.commons.DateTimeUtils;
 import com.example.zapimini.commons.IncomeCalculation;
@@ -29,9 +30,10 @@ import com.example.zapimini.views.CashUpActivityView;
 
 public class CashUpActivity extends AppCompatActivity
         implements CashUpActivityView, View.OnClickListener {
-    final static String mCreateIncomeActivity = "CashUpActivity";
+    final static String mCashUpActivity = "CashUpActivity";
     ActivityCashUpBinding activityCashUpBinding;
     double expense, amountEntered;
+    String selectedPaymentMode;
     UserLocalStorage userLocalStorage;
 
     Intent intent, broadcastIntent;
@@ -89,7 +91,7 @@ public class CashUpActivity extends AppCompatActivity
             case R.id.create_btn:
                 if(validateInputs()){
                     User user = userLocalStorage.getLoggedInUser();
-                    Log.d(mCreateIncomeActivity, "loggedIn user: "+user.getId()+
+                    Log.d(mCashUpActivity, "loggedIn user: "+user.getId()+
                             " "+user.getUsername());
 
                     Income income = new Income();
@@ -102,10 +104,11 @@ public class CashUpActivity extends AppCompatActivity
                     cashUp.setUserId(user.getId());
                     cashUp.setCreditId(-1);
                     cashUp.setAmount(amountEntered);
+                    cashUp.setPaymentMode(selectedPaymentMode);
                     cashUp.setDateTime(new DateTimeUtils().getTodayDateTime());
                     presenter.cashUp(income, cashUp);
                 }else{
-                    displayError("Your input is invalid!");
+                    displayError("Amount and payment mode must be provided!");
                 }
                 break;
         }
@@ -129,25 +132,38 @@ public class CashUpActivity extends AppCompatActivity
     @Override
     public boolean validateInputs() {
         boolean validated = false;
-        if(activityCashUpBinding.amountEntered.getText().toString().equals("")){
-            displayError("Amount is invalid!");
-        }else {
-            amountEntered = Double.parseDouble(
-                    activityCashUpBinding.amountEntered.getText().toString());
-            validated = true;
+
+        int radioButtonID = activityCashUpBinding.paymentModeGb.getCheckedRadioButtonId();
+        Log.d(mCashUpActivity, "selected: "+radioButtonID);
+        if (radioButtonID == -1) {
+            //displayError("Payment mode must be provided!");
+            validated = false;
+        }else{
+            RadioButton radioButton = (RadioButton) activityCashUpBinding.paymentModeGb.findViewById(radioButtonID);
+            selectedPaymentMode = (String) radioButton.getText();
+
+            if(activityCashUpBinding.amountEntered.getText().toString().equals("") ||
+                    selectedPaymentMode.equals("")){
+                //displayError("Amount and payment mode must be provided!");
+                validated = false;
+            }else {
+                amountEntered = Double.parseDouble(
+                        activityCashUpBinding.amountEntered.getText().toString());
+                validated = true;
+            }
         }
         return validated;
     }
 
     @Override
     public void createdCashUp(CashUp cashUp) {
-        Log.d(mCreateIncomeActivity, "Create cash: done");
+        Log.d(mCashUpActivity, "Create cash: done");
 
         activityCashUpBinding.contraint1.setVisibility(View.VISIBLE);
         activityCashUpBinding.progressBar.setVisibility(View.GONE);
 
         try{
-            Log.d(mCreateIncomeActivity, "Done");
+            Log.d(mCashUpActivity, "Done");
             String amountFormatted = new MoneyUtils().AddMoneyFormat(cashUp.getAmount());
             intent = new Intent(CashUpActivity.this,
                     CashUpConfirmationActivity.class);
@@ -156,7 +172,7 @@ public class CashUpActivity extends AppCompatActivity
             startActivity(intent);
             finish();
         }catch(Exception e){
-            Log.d(mCreateIncomeActivity, "Error: "+e.getMessage());
+            Log.d(mCashUpActivity, "Error: "+e.getMessage());
         }
     }
 

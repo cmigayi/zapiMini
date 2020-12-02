@@ -29,16 +29,20 @@ public class CashUp {
     @ColumnInfo(name = "amount")
     double amount;
 
+    @ColumnInfo(name = "payment_mode")
+    String paymentMode;
+
     @ColumnInfo(name = "date_time")
     @SerializedName("date_time")
     String dateTime;
 
-    public CashUp(int id, int userId, int businessId, int creditId, double amount, String dateTime) {
+    public CashUp(int id, int userId, int businessId, int creditId, double amount, String paymentMode, String dateTime) {
         this.id = id;
         this.userId = userId;
         this.businessId = businessId;
         this.creditId = creditId;
         this.amount = amount;
+        this.paymentMode = paymentMode;
         this.dateTime = dateTime;
     }
 
@@ -86,6 +90,14 @@ public class CashUp {
         this.amount = amount;
     }
 
+    public String getPaymentMode() {
+        return paymentMode;
+    }
+
+    public void setPaymentMode(String paymentMode) {
+        this.paymentMode = paymentMode;
+    }
+
     public String getDateTime() {
         return dateTime;
     }
@@ -102,6 +114,7 @@ public class CashUp {
                 ", businessId=" + businessId +
                 ", creditId=" + creditId +
                 ", amount=" + amount +
+                ", paymentMode=" + paymentMode +
                 ", dateTime='" + dateTime + '\'' +
                 '}';
     }

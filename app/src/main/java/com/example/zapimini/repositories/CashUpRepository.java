@@ -20,6 +20,12 @@ public interface CashUpRepository {
 
     public void getCashUpsByUserIdByDate(int userId, String date, OnFinishedListerner onFinishedListerner);
 
+    public void getCashUpsByUserIdByPaymentMode(int userId, String paymentMode,
+                                                OnFinishedListerner onFinishedListerner);
+
+    public void getCashUpsByUserIdByDateByPaymentMode(int userId, String date, String paymentMode,
+                                                      OnFinishedListerner onFinishedListerner);
+
     public void updateCashUp(CashUp cashUp, OnFinishedListerner onFinishedListerner);
 
     public void deleteCashUp(CashUp cashUp, OnFinishedListerner onFinishedListerner);

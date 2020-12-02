@@ -33,4 +33,10 @@ public interface CashUpDao {
 
     @Query("select * from cash_ups where user_id=:userId and date_time between :dateFrom and :dateTo order by id desc")
     public List<CashUp> getCashUpsByUserIdByDate(int userId, String dateFrom, String dateTo);
+
+    @Query("select * from cash_ups where user_id=:userId and payment_mode=:paymentMode order by id desc")
+    public List<CashUp> getCashUpsByUserIdByPaymentMode(int userId, String paymentMode);
+
+    @Query("select * from cash_ups where user_id=:userId and payment_mode=:paymentMode and date_time between :dateFrom and :dateTo order by id desc")
+    public List<CashUp> getCashUpsByUserIdByDateByPaymentMode(int userId, String paymentMode, String dateFrom, String dateTo);
 }

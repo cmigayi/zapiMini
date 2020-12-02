@@ -22,16 +22,34 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"/>
 
-        <TextView
-            android:id="@+id/amount"
+        <LinearLayout
+            android:id="@+id/linear_layout_1"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:textStyle="bold"
-            android:textSize="17sp"
-            android:textColor="@color/colorAccent"
+            android:orientation="horizontal"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintRight_toRightOf="parent">
+
+            <TextView
+                android:id="@+id/amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="17sp"
+                android:textColor="@color/colorAccent"/>
+
+            <TextView
+                android:id="@+id/payment_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="@{`(`+cashup.paymentMode+`)`}"
+                android:textStyle="normal"
+                android:textSize="17sp"
+                android:textColor="@color/colorAccent"/>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/credit_ticker"
@@ -44,7 +62,7 @@
             android:textStyle="italic"
             android:textSize="16sp"
             android:textColor="@color/greenColor"
-            app:layout_constraintTop_toBottomOf="@+id/amount"
+            app:layout_constraintTop_toBottomOf="@+id/linear_layout_1"
             app:layout_constraintRight_toRightOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

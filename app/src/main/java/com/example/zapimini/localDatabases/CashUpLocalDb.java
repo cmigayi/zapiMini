@@ -88,6 +88,39 @@ public class CashUpLocalDb implements CashUpRepository {
     }
 
     @Override
+    public void getCashUpsByUserIdByPaymentMode(int userId, String paymentMode, OnFinishedListerner onFinishedListerner) {
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    List<CashUp> cashUpList = cashUpDaoDatabase.cashUpDao()
+                            .getCashUpsByUserIdByPaymentMode(userId, paymentMode);
+                    onFinishedListerner.onFinished(cashUpList);
+                }catch(Exception e){
+                    onFinishedListerner.onFailuire(e);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getCashUpsByUserIdByDateByPaymentMode(int userId, String date, String paymentMode, OnFinishedListerner onFinishedListerner) {
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    String dateTo = date +" 23:59:59";
+                    List<CashUp> cashUpList = cashUpDaoDatabase.cashUpDao()
+                            .getCashUpsByUserIdByDateByPaymentMode(userId, paymentMode, date, dateTo);
+                    onFinishedListerner.onFinished(cashUpList);
+                }catch(Exception e){
+                    onFinishedListerner.onFailuire(e);
+                }
+            }
+        });
+    }
+
+    @Override
     public void updateCashUp(CashUp cashUp, OnFinishedListerner onFinishedListerner) {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override

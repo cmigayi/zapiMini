@@ -47,7 +47,8 @@ public class CustomCashUpReportAdapter extends
         String dateWithoutTime = new DateTimeUtils().removeTimeInDateTime(cashUp.getDateTime());
         cashUp.setDateTime(dateWithoutTime);
         holder.binding.setCashup(cashUp);
-        holder.binding.amount.setText(new MoneyUtils().AddMoneyFormat(cashUp.getAmount()));
+        holder.binding.amount.setText(
+                new MoneyUtils().AddMoneyFormat(cashUp.getAmount()));
 
         if(cashUp.getCreditId() != -1){
             holder.binding.creditTicker.setVisibility(View.VISIBLE);

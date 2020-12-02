@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PayableCreditsReportActivity"></activity>
+        <activity android:name=".MoreFilterActivity"></activity>
+        <activity android:name=".PayableCreditsReportActivity" />
         <activity android:name=".CreditItemPaidConfirmationActivity" />
         <activity android:name=".CashUpItemReportConfirmationActivity" />
         <activity android:name=".CashUpItemReportActivity" />

@@ -12,6 +12,6 @@ public interface CashUpsReportActivityView {
     public ProgressBar getProgressbar();
     public void authUser(UserLocalStorage userLocalStorage);
     public void displayCashUplist(String filter, List<CashUp> cashUpList);
-    public void reportByFilter(String filter, String date);
+    public void reportByFilter(String filter, String date, String paymentMode);
     public void displayError(String message);
 }

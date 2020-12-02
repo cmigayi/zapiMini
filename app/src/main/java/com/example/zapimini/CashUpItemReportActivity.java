@@ -64,7 +64,8 @@ public class CashUpItemReportActivity extends AppCompatActivity
                 Integer.parseInt(cashUpDataList.get(2)),
                 Integer.parseInt(cashUpDataList.get(3)),
                 Double.parseDouble(cashUpDataList.get(4)),
-                cashUpDataList.get(5)
+                cashUpDataList.get(5),
+                cashUpDataList.get(6)
         );
         loadCashUpToFields(importedCashUp);
 
@@ -92,6 +93,7 @@ public class CashUpItemReportActivity extends AppCompatActivity
                 importedCashUp.getUserId(),
                 importedCashUp.getCreditId(),
                 Double.parseDouble(activityCashUpItemReportBinding.amount.getText().toString()),
+                importedCashUp.getPaymentMode(),
                 importedCashUp.getDateTime()
         );
 

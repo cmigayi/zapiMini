@@ -49,7 +49,7 @@ public class CashUpsReportActivity extends AppCompatActivity implements
     ActivityCashUpsReportBinding activityCashUpsReportBinding;
     CashUpsReportActivityPresenter presenter;
 
-    String selectedDate;
+    String selectedDate, paymentMode;
 
     Intent intent;
 
@@ -60,8 +60,6 @@ public class CashUpsReportActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cash_ups_report);
-
         activityCashUpsReportBinding = DataBindingUtil.setContentView(
                 this, R.layout.activity_cash_ups_report);
 
@@ -85,11 +83,17 @@ public class CashUpsReportActivity extends AppCompatActivity implements
 
         selectedDate = "";
         if(getIntent().getStringExtra("date") == null){
-            reportByFilter("all", "");
-        }else{
+            reportByFilter("all", "", null);
+        }
+        if(getIntent().getStringExtra("paymentMode") != null){
+            paymentMode = getIntent().getStringExtra("paymentMode");
+            Log.d(mCashUpsReportActivity, "PaymentMode: "+paymentMode);
+            reportByFilter("paymentMode", "", paymentMode);
+        }
+        if(getIntent().getStringExtra("date") != null){
             selectedDate = getIntent().getStringExtra("date");
             Log.d(mCashUpsReportActivity, "Date: "+selectedDate);
-            reportByFilter("date", selectedDate);
+            reportByFilter("date", selectedDate, null);
         }
     }
 
@@ -133,6 +137,13 @@ public class CashUpsReportActivity extends AppCompatActivity implements
             case R.id.pick_date:
                 DialogFragment newFragment = new DatePickerFragment(ExpensesReportActivity.class);
                 newFragment.show(getSupportFragmentManager(), "datePicker");
+                break;
+            case R.id.more_filter:
+                intent = new Intent(
+                        CashUpsReportActivity.this, MoreFilterActivity.class);
+                intent.putExtra("date", new DateTimeUtils().getYesterdayDate());
+                startActivity(intent);
+                finish();
                 break;
             case R.id.export:
                 ExportDocumentsUtils exportDocumentsUtils = new ExportDocumentsUtils(getApplicationContext());
@@ -190,10 +201,13 @@ public class CashUpsReportActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void reportByFilter(String filter, String date) {
+    public void reportByFilter(String filter, String date, String paymentMode) {
         switch(filter){
             case "date":
                 presenter.getCashUpsByUserIdByDate(user.getId(), date);
+                break;
+            case "paymentMode":
+                presenter.getCashUpsByUserIdByPaymentMode(user.getId(), paymentMode);
                 break;
             case "all":
                 presenter.getCashUpsByUserId(user.getId());
