@@ -216,6 +216,7 @@ public class ExpensesReportActivity extends AppCompatActivity implements
         expenseDataList.add(""+expense.getId());
         expenseDataList.add(""+expense.getBusinessId());
         expenseDataList.add(""+expense.getUserId());
+        expenseDataList.add(""+expense.getCreditId());
         expenseDataList.add(expense.getItem());
         expenseDataList.add(""+expense.getAmount());
         expenseDataList.add(""+expense.getDateTime());

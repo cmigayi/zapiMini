@@ -12,7 +12,6 @@ import com.example.zapimini.localDatabases.CashUpLocalDb;
 import com.example.zapimini.localDatabases.CreditLocalDb;
 import com.example.zapimini.localDatabases.ExpenseLocalDb;
 import com.example.zapimini.localDatabases.IncomeLocalDb;
-import com.example.zapimini.repositories.CashUpRepository;
 import com.example.zapimini.repositories.CreditRepository;
 import com.example.zapimini.repositories.ExpenseRepository;
 import com.example.zapimini.repositories.IncomeRepository;
@@ -20,56 +19,22 @@ import com.example.zapimini.views.CreditItemPaidConfirmationActivityView;
 
 import java.util.List;
 
-public class CreditItemPaidConfirmationActivityPresenter {
-    final static String mCreditItemPaidConfirmationActivityPresenter= "CreditPaidConfirmationP";
+public class PayableCreditItemPaidConfirmationActivityPresenter {
+    final static String mPayableCreditItemPaidConfirmationActivityPresenter = "PayableCreditItemPaidP";
     CreditItemPaidConfirmationActivityView view;
     CreditLocalDb repository;
-    CashUpLocalDb cashUpRepository;
     IncomeLocalDb incomeRepository;
     ExpenseLocalDb expenseRepository;
 
-    public CreditItemPaidConfirmationActivityPresenter(
-            CreditLocalDb repository,
-            CashUpLocalDb cashUpRepository,
-            IncomeLocalDb incomeRepository,
-            CreditItemPaidConfirmationActivityView view) {
-        this.view = view;
-        this.repository = repository;
-        this.cashUpRepository = cashUpRepository;
-        this.incomeRepository = incomeRepository;
-    }
-
-    public CreditItemPaidConfirmationActivityPresenter(
+    public PayableCreditItemPaidConfirmationActivityPresenter(
             CreditLocalDb repository,
             ExpenseLocalDb expenseRepository,
             IncomeLocalDb incomeRepository,
             CreditItemPaidConfirmationActivityView view) {
         this.view = view;
         this.repository = repository;
-        this.expenseRepository = expenseRepository;
         this.incomeRepository = incomeRepository;
-    }
-
-    public void clearReceivable(Credit credit, CashUp cashUp, Income income){
-        // 1. Add to cashup, should indicate "settled credit" in cashup report
-        // 2. Add to income
-        // 3. update credit to paid
-        repository.updateCredit(credit, new CreditRepository.OnFinishedListerner() {
-            @Override
-            public void onFinished(List<Credit> creditlist) {
-
-            }
-
-            @Override
-            public void onFinished(Object response) {
-                createCashUp(cashUp, income, credit);
-            }
-
-            @Override
-            public void onFailuire(Throwable t) {
-
-            }
-        });
+        this.expenseRepository = expenseRepository;
     }
 
     public void clearPayable(Credit credit, Expense expense, Income income){
@@ -98,17 +63,18 @@ public class CreditItemPaidConfirmationActivityPresenter {
         expenseRepository.createExpense(expense, new ExpenseRepository.OnFinishedListerner() {
             @Override
             public void onFinished(List<Expense> expenselist) {
-                AppExecutors.getInstance().mainThread().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        try{
-                            Log.d(mCreditItemPaidConfirmationActivityPresenter, "Response: "+expenselist);
-                            view.onCreditPaidConfirmed(credit);
-                        }catch(Exception e){
-                            Log.d(mCreditItemPaidConfirmationActivityPresenter, "Error: "+e.getMessage());
-                        }
-                    }
-                });
+                getUserIncome(income, expense, credit);
+//                AppExecutors.getInstance().mainThread().execute(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        try{
+//                            Log.d(mPayableCreditItemPaidConfirmationActivityPresenter, "Response: "+expenselist);
+//                            view.onCreditPaidConfirmed(credit);
+//                        }catch(Exception e){
+//                            Log.d(mPayableCreditItemPaidConfirmationActivityPresenter, "Error: "+e.getMessage());
+//                        }
+//                    }
+//                });
             }
 
             @Override
@@ -123,51 +89,33 @@ public class CreditItemPaidConfirmationActivityPresenter {
         });
     }
 
-    private void createCashUp(CashUp cashUp, Income income, Credit credit) {
-        cashUpRepository.createCashUp(cashUp, new CashUpRepository.OnFinishedListerner() {
-            @Override
-            public void onFinished(List<CashUp> cashUpList) {
-                getUserIncome(income, cashUp, credit);
-            }
-
-            @Override
-            public void onFinished(Object object) {
-
-            }
-
-            @Override
-            public void onFailuire(Throwable t) {
-
-            }
-        });
-    }
-
-    private void getUserIncome(Income incomeFromUser, CashUp cashUp, Credit credit){
+    private void getUserIncome(Income incomeFromUser, Expense expense, Credit credit){
         String date = new DateTimeUtils().removeTimeInDateTime(incomeFromUser.getDateTime());
         incomeRepository.getIncomeByUserIdByDate(incomeFromUser.getUserId(), date, new IncomeRepository.OnFinishedListerner() {
             @Override
             public void onFinished(List<Income> incomelist) {
-                double grossAmount = 0.0;
+                double totalExpense = 0.0;
                 if(incomelist.size() > 0){
                     // Update
-                    Income incomeFromDb = incomelist.get(0);
-                    grossAmount = incomeFromDb.getGrossAmount() + incomeFromUser.getGrossAmount();
-                    double netAmount = grossAmount - incomeFromDb.getTotalExpense();
-                    incomeFromDb.setNetAmount(netAmount);
-                    incomeFromDb.setGrossAmount(grossAmount);
-                    updateIncome(incomeFromDb, cashUp, credit);
-                }else {
+                    Income income = incomelist.get(0);
+                    totalExpense = income.getTotalExpense() + expense.getAmount();
+                    double netAmount = income.getGrossAmount() - totalExpense;
+                    income.setNetAmount(netAmount);
+                    income.setTotalExpense(totalExpense);
+                    updateIncome(income, expense, credit);
+                }else{
+                    double netAmount = 0.0 - totalExpense;
                     // create
-                    Income income = new Income(
+                    Income income =  new Income(
                             0,
-                            incomeFromUser.getUserId(),
-                            incomeFromUser.getBusinessId(),
-                            incomeFromUser.getGrossAmount(),
+                            expense.getUserId(),
+                            expense.getBusinessId(),
                             0.0,
-                            incomeFromUser.getGrossAmount(),
+                            expense.getAmount(),
+                            netAmount,
                             new DateTimeUtils().getTodayDateTime()
                     );
-                    createIncome(income, cashUp, credit);
+                    createIncome(income, expense, credit);
                 }
             }
 
@@ -178,7 +126,7 @@ public class CreditItemPaidConfirmationActivityPresenter {
 
             @Override
             public void onFailuire(Throwable t) {
-                Log.d(mCreditItemPaidConfirmationActivityPresenter, "Error: "+t.getMessage());
+                Log.d(mPayableCreditItemPaidConfirmationActivityPresenter, "Error: "+t.getMessage());
                 AppExecutors.getInstance().mainThread().execute(new Runnable() {
                     @Override
                     public void run() {
@@ -189,7 +137,7 @@ public class CreditItemPaidConfirmationActivityPresenter {
         });
     }
 
-    private void updateIncome(Income income, CashUp cashUp, Credit credit){
+    private void updateIncome(Income income, Expense expense, Credit credit){
         incomeRepository.updateIncome(income, new IncomeRepository.OnFinishedListerner() {
             @Override
             public void onFinished(List<Income> incomelist) {
@@ -202,10 +150,11 @@ public class CreditItemPaidConfirmationActivityPresenter {
                     @Override
                     public void run() {
                         try{
-                            Log.d(mCreditItemPaidConfirmationActivityPresenter, "Response: "+response);
+                            Log.d(mPayableCreditItemPaidConfirmationActivityPresenter,
+                                    "Response: "+response);
                             view.onCreditPaidConfirmed(credit);
                         }catch(Exception e){
-                            Log.d(mCreditItemPaidConfirmationActivityPresenter, "Error: "+e.getMessage());
+                            Log.d(mPayableCreditItemPaidConfirmationActivityPresenter, "Error: "+e.getMessage());
                         }
                     }
                 });
@@ -213,16 +162,16 @@ public class CreditItemPaidConfirmationActivityPresenter {
 
             @Override
             public void onFailuire(Throwable t) {
-                Log.d(mCreditItemPaidConfirmationActivityPresenter, "Error: "+t.getMessage());
+                Log.d(mPayableCreditItemPaidConfirmationActivityPresenter, "Error: "+t.getMessage());
             }
         });
     }
 
-    public void createIncome(Income income, CashUp cashUp, Credit credit){
+    public void createIncome(Income income, Expense expense, Credit credit){
         incomeRepository.createIncome(income, new IncomeRepository.OnFinishedListerner() {
             @Override
             public void onFinished(List<Income> incomelist) {
-                Log.d(mCreditItemPaidConfirmationActivityPresenter, "Response: "+incomelist.size());
+                Log.d(mPayableCreditItemPaidConfirmationActivityPresenter, "Response: "+incomelist.size());
                 AppExecutors.getInstance().mainThread().execute(new Runnable() {
                     @Override
                     public void run() {
@@ -230,10 +179,10 @@ public class CreditItemPaidConfirmationActivityPresenter {
                             @Override
                             public void run() {
                                 try{
-                                    Log.d(mCreditItemPaidConfirmationActivityPresenter, "Response: "+incomelist);
+                                    Log.d(mPayableCreditItemPaidConfirmationActivityPresenter, "Response: "+incomelist);
                                     view.onCreditPaidConfirmed(credit);
                                 }catch(Exception e){
-                                    Log.d(mCreditItemPaidConfirmationActivityPresenter, "Error: "+e.getMessage());
+                                    Log.d(mPayableCreditItemPaidConfirmationActivityPresenter, "Error: "+e.getMessage());
                                 }
                             }
                         });
@@ -248,7 +197,7 @@ public class CreditItemPaidConfirmationActivityPresenter {
 
             @Override
             public void onFailuire(Throwable t) {
-                Log.d(mCreditItemPaidConfirmationActivityPresenter, "Error: "+t.getMessage());
+                Log.d(mPayableCreditItemPaidConfirmationActivityPresenter, "Error: "+t.getMessage());
             }
         });
     }

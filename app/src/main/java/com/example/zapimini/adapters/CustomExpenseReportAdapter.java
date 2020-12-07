@@ -49,6 +49,10 @@ public class CustomExpenseReportAdapter extends
         expense.setDateTime(dateWithoutTime);
         holder.binding.setExpense(expense);
         holder.binding.amount.setText(new MoneyUtils().AddMoneyFormat(expense.getAmount()));
+        if(expense.getCreditId() > 0){
+            holder.binding.creditStatusTv.setText("Paid credit");
+            holder.binding.creditStatusTv.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

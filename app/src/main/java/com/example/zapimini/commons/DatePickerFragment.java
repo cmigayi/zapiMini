@@ -33,18 +33,27 @@ public class DatePickerFragment extends DialogFragment
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        // Do something with the date chosen by the use
+        month = month + 1;
+
         String date;
+        String monthStr = ""+month;
+        String dayStr = ""+day;
+
         if(String.valueOf(month).length() == 1){
-            date = year+"-0"+(month+1)+"-"+day;
-        }else{
-            date = year+"-"+(month+1)+"-"+day;
+            monthStr = "0"+month;
         }
+
+        if(String.valueOf(day).length() == 1){
+            dayStr = "0"+day;
+        }
+
+        date = year+"-"+monthStr+"-"+dayStr;
 
         Log.d("DateItem",date);
         Intent intent = new Intent(
                 getActivity(), mActivity);
         intent.putExtra("date", date);
+        intent.putExtra("action", "datePicker");
         startActivity(intent);
         getActivity().finish();
     }

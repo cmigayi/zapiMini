@@ -3,6 +3,7 @@ package com.example.zapimini;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.DialogFragment;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
 
+import com.example.zapimini.commons.DatePickerFragment;
 import com.example.zapimini.commons.DateTimeUtils;
 import com.example.zapimini.data.CashUp;
 import com.example.zapimini.data.User;
@@ -31,6 +33,7 @@ public class MoreFilterActivity extends AppCompatActivity implements View.OnClic
 
     UserLocalStorage userLocalStorage;
     User user;
+    String selectedDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +48,15 @@ public class MoreFilterActivity extends AppCompatActivity implements View.OnClic
         userLocalStorage = new UserLocalStorage(this);
         user = userLocalStorage.getLoggedInUser();
 
+        selectedDate = "";
+        if(getIntent().getStringExtra("date") != null){
+            selectedDate = getIntent().getStringExtra("date");
+            activityMoreFilterBinding.selectedDateTv.setText(selectedDate);
+        }
+
         activityMoreFilterBinding.submitBtn.setOnClickListener(this);
         activityMoreFilterBinding.cancelBtn.setOnClickListener(this);
+        activityMoreFilterBinding.datePickerBtn.setOnClickListener(this);
     }
 
     @Override
@@ -68,9 +78,14 @@ public class MoreFilterActivity extends AppCompatActivity implements View.OnClic
                     intent = new Intent(
                             MoreFilterActivity.this, CashUpsReportActivity.class);
                     intent.putExtra("paymentMode", selectedPaymentMode);
+                    intent.putExtra("date", selectedDate);
                     startActivity(intent);
                     finish();
                 }
+                break;
+            case R.id.date_picker_btn:
+                DialogFragment newFragment = new DatePickerFragment(MoreFilterActivity.class);
+                newFragment.show(getSupportFragmentManager(), "datePicker");
                 break;
             case R.id.cancel_btn:
                 intent = new Intent(

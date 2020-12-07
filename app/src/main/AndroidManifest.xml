@@ -12,9 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MoreFilterActivity"></activity>
+        <activity android:name=".PayableCreditItemPaidConfirmationActivity"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".MoreFilterActivity" />
         <activity android:name=".PayableCreditsReportActivity" />
-        <activity android:name=".CreditItemPaidConfirmationActivity" />
+        <activity android:name=".CreditItemPaidConfirmationActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".CashUpItemReportConfirmationActivity" />
         <activity android:name=".CashUpItemReportActivity" />
         <activity android:name=".CashUpConfirmationActivity" />
@@ -23,7 +26,8 @@
         <activity android:name=".CreditItemReportActivity" />
         <activity android:name=".CreditsReportActivity" />
         <activity android:name=".AddCreditConfirmationActivity" />
-        <activity android:name=".AddCreditActivity" />
+        <activity android:name=".AddCreditActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".ProfileActivity" />
         <activity
             android:name=".SettingsActivity"

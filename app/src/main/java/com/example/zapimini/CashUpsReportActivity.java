@@ -82,19 +82,20 @@ public class CashUpsReportActivity extends AppCompatActivity implements
         presenter = new CashUpsReportActivityPresenter(cashUpLocalDb,this);
 
         selectedDate = "";
-        if(getIntent().getStringExtra("date") == null){
-            reportByFilter("all", "", null);
-        }
-        if(getIntent().getStringExtra("paymentMode") != null){
-            paymentMode = getIntent().getStringExtra("paymentMode");
-            Log.d(mCashUpsReportActivity, "PaymentMode: "+paymentMode);
-            reportByFilter("paymentMode", "", paymentMode);
-        }
-        if(getIntent().getStringExtra("date") != null){
-            selectedDate = getIntent().getStringExtra("date");
-            Log.d(mCashUpsReportActivity, "Date: "+selectedDate);
-            reportByFilter("date", selectedDate, null);
-        }
+        filterReport(getIntent().getStringExtra("date"), getIntent().getStringExtra("paymentMode"));
+//        if(getIntent().getStringExtra("date") == null){
+//            reportByFilter("all", "", null);
+//        }
+//        if(getIntent().getStringExtra("paymentMode") != null){
+//            paymentMode = getIntent().getStringExtra("paymentMode");
+//            Log.d(mCashUpsReportActivity, "PaymentMode: "+paymentMode);
+//            reportByFilter("paymentMode", "", paymentMode);
+//        }
+//        if(getIntent().getStringExtra("date") != null){
+//            selectedDate = getIntent().getStringExtra("date");
+//            Log.d(mCashUpsReportActivity, "Date: "+selectedDate);
+//            reportByFilter("date", selectedDate, null);
+//        }
     }
 
     @Override
@@ -209,6 +210,9 @@ public class CashUpsReportActivity extends AppCompatActivity implements
             case "paymentMode":
                 presenter.getCashUpsByUserIdByPaymentMode(user.getId(), paymentMode);
                 break;
+            case "date + paymentMode":
+                presenter.getCashUpsByUserIdByDateByPaymentMode(user.getId(), date, paymentMode);
+                break;
             case "all":
                 presenter.getCashUpsByUserId(user.getId());
                 break;
@@ -243,9 +247,31 @@ public class CashUpsReportActivity extends AppCompatActivity implements
             cashUpDataList.add("" + cashUp.getUserId());
             cashUpDataList.add("" + cashUp.getCreditId());
             cashUpDataList.add("" + cashUp.getAmount());
+            cashUpDataList.add("" + cashUp.getPaymentMode());
             cashUpDataList.add("" + cashUp.getDateTime());
+
             intent.putExtra("cashUpDataList", (Serializable) cashUpDataList);
             startActivity(intent);
+        }
+    }
+
+    private void filterReport(String date, String paymentMode){
+        if(date != null && paymentMode != null){
+            reportByFilter("date + paymentMode", date, paymentMode);
+        }else{
+            if(date == null){
+                reportByFilter("all", "", null);
+            }
+            if(paymentMode != null){
+                paymentMode = getIntent().getStringExtra("paymentMode");
+                Log.d(mCashUpsReportActivity, "PaymentMode: "+paymentMode);
+                reportByFilter("paymentMode", "", paymentMode);
+            }
+            if(date != null){
+                selectedDate = getIntent().getStringExtra("date");
+                Log.d(mCashUpsReportActivity, "Date: "+selectedDate);
+                reportByFilter("date", selectedDate, null);
+            }
         }
     }
 }

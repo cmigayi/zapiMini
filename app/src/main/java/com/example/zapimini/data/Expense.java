@@ -20,6 +20,10 @@ public class Expense {
     @SerializedName("user_id")
     private int userId;
 
+    @ColumnInfo(name = "credit_id")
+    @SerializedName("credit_id")
+    private int creditId;
+
     @ColumnInfo(name = "item")
     @SerializedName("item")
     private String item;
@@ -32,10 +36,11 @@ public class Expense {
     @SerializedName("date_time")
     private String dateTime;
 
-    public Expense(int id, int businessId, int userId, String item, double amount, String dateTime) {
+    public Expense(int id, int businessId, int userId, int creditId, String item, double amount, String dateTime) {
         this.id = id;
         this.businessId = businessId;
         this.userId = userId;
+        this.creditId = creditId;
         this.item = item;
         this.amount = amount;
         this.dateTime = dateTime;
@@ -69,6 +74,14 @@ public class Expense {
         this.userId = userId;
     }
 
+    public int getCreditId() {
+        return creditId;
+    }
+
+    public void setCreditId(int creditId) {
+        this.creditId = creditId;
+    }
+
     public String getItem() {
         return item;
     }
@@ -99,6 +112,7 @@ public class Expense {
                 "id=" + id +
                 ", businessId=" + businessId +
                 ", userId=" + userId +
+                ", creditId=" + creditId +
                 ", item='" + item + '\'' +
                 ", amount=" + amount +
                 ", dateTime='" + dateTime + '\'' +

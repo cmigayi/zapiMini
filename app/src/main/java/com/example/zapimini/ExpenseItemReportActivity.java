@@ -57,9 +57,10 @@ public class ExpenseItemReportActivity extends AppCompatActivity
                 Integer.parseInt(expenseDataList.get(0)),
                 Integer.parseInt(expenseDataList.get(1)),
                 Integer.parseInt(expenseDataList.get(2)),
-                expenseDataList.get(3),
-                Double.parseDouble(expenseDataList.get(4)),
-                expenseDataList.get(5)
+                Integer.parseInt(expenseDataList.get(3)),
+                expenseDataList.get(4),
+                Double.parseDouble(expenseDataList.get(5)),
+                expenseDataList.get(6)
         );
         loadExpenseToFields(importedExpense);
 
@@ -147,6 +148,7 @@ public class ExpenseItemReportActivity extends AppCompatActivity
                 importedExpense.getId(),
                 importedExpense.getBusinessId(),
                 importedExpense.getUserId(),
+                importedExpense.getCreditId(),
                 activityExpenseItemReportBinding.item.getText().toString(),
                 Double.parseDouble(activityExpenseItemReportBinding.cost.getText().toString()),
                 importedExpense.getDateTime()

@@ -84,7 +84,8 @@ public class CreditsReportActivity extends AppCompatActivity
         selectedDate = "";
         if(getIntent().getStringExtra("date") == null){
             reportByFilter("all", "");
-        }else{
+        }
+        if(getIntent().getStringExtra("date") != null){
             selectedDate = getIntent().getStringExtra("date");
             Log.d(mCreditReportActivity, "Date: "+selectedDate);
             reportByFilter("date", selectedDate);
@@ -250,5 +251,26 @@ public class CreditsReportActivity extends AppCompatActivity
             }
         });
         builder.show();
+    }
+
+    private void filterReport(String date, String paymentMode){
+
+        if(date != null && paymentMode != null){
+
+        }
+
+        reportByFilter("all", "");
+
+        if(date != null){
+            selectedDate = getIntent().getStringExtra("date");
+            Log.d(mCreditReportActivity, "Date: "+selectedDate);
+            reportByFilter("date", selectedDate);
+        }
+
+        if(date != null && date != null){
+            selectedDate = getIntent().getStringExtra("date");
+            Log.d(mCreditReportActivity, "Date: "+selectedDate);
+            reportByFilter("date", selectedDate);
+        }
     }
 }

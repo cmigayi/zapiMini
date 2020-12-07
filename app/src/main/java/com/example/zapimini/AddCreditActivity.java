@@ -2,6 +2,7 @@ package com.example.zapimini;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -104,6 +105,7 @@ public class AddCreditActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -134,6 +136,12 @@ public class AddCreditActivity extends AppCompatActivity
                 }
                 break;
             case R.id.import_btn:
+                int hasWriteContactsPermission = checkSelfPermission(Manifest.permission.READ_CONTACTS);
+                if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[] {Manifest.permission.READ_CONTACTS},
+                            REQUEST_CODE_ASK_PERMISSIONS);
+                    return;
+                }
                 intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
                 startActivityForResult(intent, PICK_CONTACT);
                 break;
@@ -218,9 +226,9 @@ public class AddCreditActivity extends AppCompatActivity
                 phone.moveToFirst();
                 String phoneNumber = phone.getString(phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
 
-//                Log.d(mAddCreditActivity, "Contacts");
-//                Log.d(mAddCreditActivity, "name: "+name);
-//                Log.d(mAddCreditActivity, "number: "+phoneNumber);
+                Log.d(mAddCreditActivity, "Contacts");
+                Log.d(mAddCreditActivity, "name: "+name);
+                Log.d(mAddCreditActivity, "number: "+phoneNumber);
                 activityAddCreditBinding.name.setText(name);
                 activityAddCreditBinding.phone.setText(phoneNumber);
                 Toast.makeText(this, name+":"+phoneNumber+" imported", Toast.LENGTH_LONG).show();

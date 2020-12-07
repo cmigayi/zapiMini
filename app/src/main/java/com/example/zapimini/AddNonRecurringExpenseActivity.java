@@ -101,6 +101,7 @@ public class AddNonRecurringExpenseActivity extends AppCompatActivity
                             0,
                             business.getId(),
                             user.getId(),
+                            -1,
                             activityAddNonRecurringExpenseBinding.itemName.getText().toString(),
                             Double.parseDouble(activityAddNonRecurringExpenseBinding.amountValue.getText().toString()),
                             new DateTimeUtils().getTodayDateTime()

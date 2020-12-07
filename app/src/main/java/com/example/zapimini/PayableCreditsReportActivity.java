@@ -214,9 +214,9 @@ public class PayableCreditsReportActivity extends AppCompatActivity
 
     @Override
     public void onCreditReportClick(int position) {
-        final CharSequence[] items = {"Modify Credit","Credit Paid","Cancel"};
+        final CharSequence[] items = {"Modify Payable Credit","Payable Credit Paid","Cancel"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Credit Actions");
+        builder.setTitle("Payable Credit Actions");
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -236,7 +236,7 @@ public class PayableCreditsReportActivity extends AppCompatActivity
 
                 switch (which){
                     case 0:
-                        Log.d(mCreditReportActivity, "credit clicked: "+position);
+                        Log.d(mCreditReportActivity, "Payable credit clicked: "+position);
                         intent = new Intent(PayableCreditsReportActivity.this,
                                 CreditItemReportActivity.class);
 
@@ -245,8 +245,7 @@ public class PayableCreditsReportActivity extends AppCompatActivity
                         break;
                     case 1:
                         intent = new Intent(PayableCreditsReportActivity.this,
-                                CreditItemPaidConfirmationActivity.class);
-                        intent.putExtra("type", "payable");
+                                PayableCreditItemPaidConfirmationActivity.class);
                         intent.putExtra("creditDataList", (Serializable) creditDataList);
                         startActivity(intent);
                         break;

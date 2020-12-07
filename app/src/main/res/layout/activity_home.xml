@@ -12,50 +12,49 @@
 
             <include android:id="@+id/tool_bar" layout="@layout/tool_bar"/>
 
-            <TextView
-                android:id="@+id/page_title"
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:background="#e7e7e7"
-                android:text="Overview"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="#757575"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"/>
-
-            <View
-                android:id="@+id/view1"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="#cfcfcf"
-                app:layout_constraintTop_toBottomOf="@id/page_title"
-                app:layout_constraintLeft_toLeftOf="parent"/>
-
-            <TextView
-                android:id="@+id/error_tv"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:background="#f1f1f1"
-                android:textColor="#c02421"
-                android:textStyle="bold"
-                android:textSize="16sp"/>
+                android:layout_marginTop="5dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp">
+                android:padding="0dp">
+
+                <LinearLayout
+                    android:id="@+id/linear_layout_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_not_renewed_home_alert"/>
+
+                    <TextView
+                        android:id="@+id/storage_renewal_status_tv"
+                        android:visibility="visible"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="Your data is not safe-guarded. Makes sure you renew soon!"
+                        android:textColor="#c02421"
+                        android:textStyle="bold"
+                        android:textSize="15sp"/>
+
+                </LinearLayout>
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardview3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toBottomOf="@+id/linear_layout_1">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -170,7 +169,7 @@
                             app:layout_constraintLeft_toLeftOf="parent"/>
 
                         <TextView
-                            android:id="@+id/credit_title"
+                            android:id="@+id/payable_credit_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -178,6 +177,18 @@
                             android:textColor="#8d694d"
                             android:text="Payable Credit:"
                             app:layout_constraintTop_toBottomOf="@+id/view4"
+                            app:layout_constraintLeft_toLeftOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/payable_credit_subtitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="0dp"
+                            android:textSize="13sp"
+                            android:textColor="@color/blackColor"
+                            android:text="Money i owe businesses or persons"
+                            android:textStyle="normal"
+                            app:layout_constraintTop_toBottomOf="@+id/payable_credit_title"
                             app:layout_constraintLeft_toLeftOf="parent"/>
 
                         <TextView
@@ -190,6 +201,50 @@
                             android:textSize="20sp"
                             android:textColor="#8d694d"
                             app:layout_constraintTop_toBottomOf="@+id/view4"
+                            app:layout_constraintRight_toRightOf="parent" />
+
+                        <View
+                            android:id="@+id/view5"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="5dp"
+                            android:background="#eec9a3"
+                            app:layout_constraintTop_toBottomOf="@+id/payable_credit_subtitle"
+                            app:layout_constraintLeft_toLeftOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/receivable_credit_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:textSize="20sp"
+                            android:textColor="#8d694d"
+                            android:text="Receivable Credit:"
+                            app:layout_constraintTop_toBottomOf="@+id/view5"
+                            app:layout_constraintLeft_toLeftOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/receivable_credit_subtitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="0dp"
+                            android:textSize="13sp"
+                            android:textColor="@color/blackColor"
+                            android:text="Money businesses or persons owes me"
+                            android:textStyle="normal"
+                            app:layout_constraintTop_toBottomOf="@+id/receivable_credit_title"
+                            app:layout_constraintLeft_toLeftOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/receivable_credit_amount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:text="-"
+                            android:textSize="20sp"
+                            android:textColor="#8d694d"
+                            app:layout_constraintTop_toBottomOf="@+id/view5"
                             app:layout_constraintRight_toRightOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -265,6 +320,8 @@
                     app:layout_constraintTop_toBottomOf="@+id/cash_up_btn"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </ScrollView>
 
         </LinearLayout>
 

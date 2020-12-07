@@ -45,6 +45,7 @@ public class AddNonRecurringExpenseActivityPresenter {
                             income.setTotalExpense(totalExpense);
                             updateIncome(incomeLocalDb, income);
                         }else{
+                            double netAmount = 0.0 - totalExpense;
                             // create
                             Income income =  new Income(
                                     0,
@@ -52,7 +53,7 @@ public class AddNonRecurringExpenseActivityPresenter {
                                     expense.getBusinessId(),
                                     0.0,
                                     expense.getAmount(),
-                                    expense.getAmount(),
+                                    netAmount,
                                     new DateTimeUtils().getTodayDateTime()
                             );
                             createIncome(incomeLocalDb, income);
