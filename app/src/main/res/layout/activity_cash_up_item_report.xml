@@ -66,13 +66,40 @@
                 android:inputType="numberDecimal"
                 app:layout_constraintTop_toBottomOf="@+id/amount_tv"/>
 
+            <TextView
+                android:id="@+id/description_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:textStyle="bold"
+                android:textSize="17sp"
+                android:text="Item description (Optional):"
+                app:layout_constraintTop_toBottomOf="@+id/amount"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <EditText
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:hint="Item description (Optional)"
+                android:scrollbars="vertical"
+                android:fadeScrollbars="false"
+                android:layout_weight="1"
+                android:inputType="textMultiLine"
+                android:maxLines="4"
+                android:minLines="1"
+                android:background="@drawable/bg_edit_text"
+                app:layout_constraintTop_toBottomOf="@id/description_title"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
             <Button
                 android:id="@+id/update_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Update"
-                app:layout_constraintTop_toBottomOf="@+id/amount"
+                app:layout_constraintTop_toBottomOf="@+id/description"
                 app:layout_constraintRight_toRightOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

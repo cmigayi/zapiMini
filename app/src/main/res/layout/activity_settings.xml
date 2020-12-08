@@ -72,7 +72,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/bg_transparent_black_btn"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginLeft="5dp"
                             android:padding="10dp"
                             android:text="Restore.."
                             android:textSize="17sp"
@@ -89,7 +89,7 @@
                 android:id="@+id/cardview2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardview1">
 
@@ -104,14 +104,14 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
                         android:textStyle="bold"
-                        android:text="Storage renewal"
+                        android:text="Storage Renewal"
                         android:textSize="18sp"
                         android:textColor="@color/colorPrimaryDark"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
+                        android:gravity="left"
                         android:textSize="15sp"
                         android:text="Pay to renew for your data storage"/>
 
@@ -119,14 +119,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="10dp">
+                        android:layout_marginTop="5dp"
+                        android:gravity="left">
 
                         <Button
                             android:id="@+id/payment_report_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/bg_black_button"
-                            android:layout_marginLeft="10dp"
                             android:padding="10dp"
                             android:text="Payment report.."
                             android:textSize="17sp"
@@ -138,7 +138,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/bg_red_button"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginLeft="5dp"
                             android:padding="10dp"
                             android:text="Renew.."
                             android:textSize="17sp"
@@ -149,6 +149,65 @@
 
                 </LinearLayout>
 
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardview3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardview2">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/switch_business_title_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:textStyle="bold"
+                        android:text="Switch Business"
+                        android:textSize="18sp"
+                        android:textColor="@color/colorPrimaryDark"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/current_business_title_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="normal"
+                        android:text="Current business: "
+                        android:textSize="17sp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/switch_business_title_tv"/>
+
+                    <TextView
+                        android:id="@+id/current_business_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:textStyle="normal"
+                        android:text="Cilo"
+                        android:textSize="17sp"
+                        android:textColor="@color/blackColor"
+                        app:layout_constraintLeft_toRightOf="@+id/current_business_title_tv"
+                        app:layout_constraintTop_toBottomOf="@+id/switch_business_title_tv"/>
+
+                    <Spinner
+                        android:id="@+id/businesses_sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_spinner"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/current_business_title_tv"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>
 

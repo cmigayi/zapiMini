@@ -53,24 +53,24 @@
             app:layout_constraintRight_toRightOf="parent">
 
             <Button
-                android:id="@+id/add_another"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_confirm_btn"
-                android:textColor="#ffffff"
-                android:textSize="17sp"
-                android:text="Add another credit"
-                android:textAllCaps="false"/>
-
-            <Button
                 android:id="@+id/credit_report"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
                 android:background="@drawable/bg_confirm_btn"
                 android:textColor="#ffffff"
                 android:textSize="17sp"
                 android:text="View credits reports"
+                android:textAllCaps="false"/>
+
+            <Button
+                android:id="@+id/add_another"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_confirm_btn"
+                android:layout_marginTop="15dp"
+                android:textColor="#ffffff"
+                android:textSize="17sp"
+                android:text="Add another credit"
                 android:textAllCaps="false"/>
 
         </LinearLayout>

@@ -42,8 +42,9 @@ public class CustomIncomeReportAdapter extends
     @Override
     public void onBindViewHolder(@NonNull CustomIncomeReportAdapter.ViewHolder holder, int position) {
         Income income = incomelist.get(position);
-        String dateWithoutTime = new DateTimeUtils().removeTimeInDateTime(income.getDateTime());
-        income.setDateTime(dateWithoutTime);
+        //String dateWithoutTime = new DateTimeUtils().removeTimeInDateTime(income.getDateTime());
+        String dateWithTime = income.getDateTime();
+        income.setDateTime(dateWithTime);
         holder.binding.setIncome(income);
         holder.binding.grossAmount.setText(
                 "Gross: "+new MoneyUtils().AddMoneyFormat(income.getGrossAmount()));

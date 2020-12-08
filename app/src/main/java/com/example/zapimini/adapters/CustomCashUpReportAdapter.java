@@ -44,14 +44,18 @@ public class CustomCashUpReportAdapter extends
     @Override
     public void onBindViewHolder(@NonNull CustomCashUpReportAdapter.ViewHolder holder, int position) {
         CashUp cashUp = cashUpList.get(position);
-        String dateWithoutTime = new DateTimeUtils().removeTimeInDateTime(cashUp.getDateTime());
-        cashUp.setDateTime(dateWithoutTime);
+        // String dateWithoutTime = new DateTimeUtils().removeTimeInDateTime(cashUp.getDateTime());
+        String dateWithTime = cashUp.getDateTime();
+        cashUp.setDateTime(dateWithTime);
         holder.binding.setCashup(cashUp);
         holder.binding.amount.setText(
                 new MoneyUtils().AddMoneyFormat(cashUp.getAmount()));
 
         if(cashUp.getCreditId() != -1){
             holder.binding.creditTicker.setVisibility(View.VISIBLE);
+        }
+        if(cashUp.getDescription() == null || cashUp.getDescription().equals("")){
+            holder.binding.description.setVisibility(View.GONE);
         }
     }
 

@@ -104,6 +104,7 @@ public class CashUpActivity extends AppCompatActivity
                     cashUp.setUserId(user.getId());
                     cashUp.setCreditId(-1);
                     cashUp.setAmount(amountEntered);
+                    cashUp.setDescription(activityCashUpBinding.descriptionEntered.getText().toString());
                     cashUp.setPaymentMode(selectedPaymentMode);
                     cashUp.setDateTime(new DateTimeUtils().getTodayDateTime());
                     presenter.cashUp(income, cashUp);

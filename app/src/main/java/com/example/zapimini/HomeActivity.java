@@ -79,7 +79,12 @@ public class HomeActivity extends AppCompatActivity
                                 presenter.loadOverallNetIncome(user.getId());
                                 presenter.loadCredit(
                                         user.getId(),
-                                        "I owe this business, supplier or person money (Payable).");
+                                        "I owe this business, supplier or person money (Payable)."
+                                );
+                                presenter.loadCredit(
+                                        user.getId(),
+                                        "This business or person owes me or my business money (Receivable)."
+                                );
                             }
                         });
                     }
@@ -152,7 +157,9 @@ public class HomeActivity extends AppCompatActivity
             case R.id.add_item_btn:
                 String[] addItemOptions = {
                         "Expense",
-                        "Credit"
+                        "Credit",
+                        "Prepaid",
+                        "Group"
                 };
                 AddItemDialog addItemDialog = new AddItemDialog(addItemOptions);
                 addItemDialog.show(getSupportFragmentManager(), "dialog");
@@ -208,8 +215,13 @@ public class HomeActivity extends AppCompatActivity
     }
 
     @Override
-    public void updateCreditAmount(double amount) {
-        activityHomeBinding.creditAmount.setText(new MoneyUtils().AddMoneyFormat(amount));
+    public void updatePayableCreditAmount(double amount) {
+        activityHomeBinding.payableCreditAmount.setText(new MoneyUtils().AddMoneyFormat(amount));
+    }
+
+    @Override
+    public void updateReceivableCreditAmount(double amount) {
+        activityHomeBinding.receivableCreditAmount.setText(new MoneyUtils().AddMoneyFormat(amount));
     }
 
     @Override

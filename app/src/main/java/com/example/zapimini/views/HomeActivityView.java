@@ -8,6 +8,7 @@ public interface HomeActivityView {
     public void updateOverallNetIncome(double amount);
     public void updateNetAmount(double amount);
     public void updateGrossAmount(double amount);
-    public void updateCreditAmount(double amount);
+    public void updatePayableCreditAmount(double amount);
+    public void updateReceivableCreditAmount(double amount);
     public void displayError(String message);
 }

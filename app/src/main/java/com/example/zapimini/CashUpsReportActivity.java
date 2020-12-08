@@ -247,6 +247,7 @@ public class CashUpsReportActivity extends AppCompatActivity implements
             cashUpDataList.add("" + cashUp.getUserId());
             cashUpDataList.add("" + cashUp.getCreditId());
             cashUpDataList.add("" + cashUp.getAmount());
+            cashUpDataList.add("" + cashUp.getDescription());
             cashUpDataList.add("" + cashUp.getPaymentMode());
             cashUpDataList.add("" + cashUp.getDateTime());
 

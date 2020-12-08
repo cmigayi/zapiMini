@@ -46,12 +46,18 @@ public class CustomCreditReportAdapter extends
     @Override
     public void onBindViewHolder(@NonNull CustomCreditReportAdapter.ViewHolder holder, int position) {
         Credit credit = creditlist.get(position);
-        String dateWithoutTime = new DateTimeUtils().removeTimeInDateTime(credit.getDateTime());
-        credit.setDateTime(dateWithoutTime);
+        // String dateWithoutTime = new DateTimeUtils().removeTimeInDateTime(credit.getDateTime());
+        String dateWithTime = credit.getDateTime();
+        double balance = credit.getBalance();
+
+        credit.setDateTime(dateWithTime);
         holder.binding.setCredit(credit);
         holder.binding.amount.setText(new MoneyUtils().AddMoneyFormat(credit.getAmount()));
         holder.binding.paid.setText("Paid: "+new MoneyUtils().AddMoneyFormat(credit.getPaidAmount()));
         holder.binding.balance.setText("Bal: "+new MoneyUtils().AddMoneyFormat(credit.getBalance()));
+        if(balance == 0.0){
+            holder.binding.fullyPaidTv.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

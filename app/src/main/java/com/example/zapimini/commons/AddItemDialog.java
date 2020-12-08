@@ -34,12 +34,10 @@ public class AddItemDialog extends DialogFragment {
                                 intent = new Intent(getActivity(),
                                         AddNonRecurringExpenseActivity.class);
                                 startActivity(intent);
-                                //getActivity().finish();
                                 break;
                             case 1:
                                 intent = new Intent(getActivity(), AddCreditActivity.class);
                                 startActivity(intent);
-                                getActivity().finish();
                                 break;
                         }
 

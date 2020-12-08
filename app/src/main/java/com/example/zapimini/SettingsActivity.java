@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +16,8 @@ import com.example.zapimini.data.User;
 import com.example.zapimini.databinding.ActivitySettingsBinding;
 import com.example.zapimini.localStorage.UserLocalStorage;
 
-public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
+public class SettingsActivity extends AppCompatActivity
+        implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     final static String mSettingsActivity = "SettingsActivity";
     ActivitySettingsBinding activitySettingsBinding;
     static Activity aSettingsActivity;
@@ -22,6 +25,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     Intent intent;
     UserLocalStorage userLocalStorage;
     User user;
+
+    String [] businesslist = {"Choose business","Business A","Business B"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,11 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
         userLocalStorage = new UserLocalStorage(this);
         user = userLocalStorage.getLoggedInUser();
+
+        ArrayAdapter<String> businessAdapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_list_item_1, businesslist);
+        activitySettingsBinding.businessesSp.setAdapter(businessAdapter);
+        activitySettingsBinding.businessesSp.setOnItemSelectedListener(this);
 
         activitySettingsBinding.backUpBtn.setOnClickListener(this);
         activitySettingsBinding.restoreBtn.setOnClickListener(this);
@@ -74,5 +84,17 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
                 break;
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if(position > 0){
+            activitySettingsBinding.currentBusinessName.setText(businesslist[position]);
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

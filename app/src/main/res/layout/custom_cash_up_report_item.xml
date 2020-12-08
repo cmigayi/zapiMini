@@ -14,21 +14,21 @@
 
         <TextView
             android:id="@+id/cash_up_date"
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimary"
             android:text="@{cashup.dateTime}"
-            android:textSize="18sp"
+            android:textSize="16sp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"/>
 
         <LinearLayout
             android:id="@+id/linear_layout_1"
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:orientation="horizontal"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cash_up_date"
             app:layout_constraintRight_toRightOf="parent">
 
             <TextView
@@ -63,6 +63,18 @@
             android:textSize="16sp"
             android:textColor="@color/greenColor"
             app:layout_constraintTop_toBottomOf="@+id/linear_layout_1"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@{cashup.description}"
+            android:textStyle="normal"
+            android:textSize="16sp"
+            android:textColor="@color/blackColor"
+            app:layout_constraintTop_toBottomOf="@+id/credit_ticker"
             app:layout_constraintRight_toRightOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

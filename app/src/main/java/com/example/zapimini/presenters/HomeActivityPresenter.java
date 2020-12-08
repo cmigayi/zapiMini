@@ -104,8 +104,14 @@ public class HomeActivityPresenter {
                     public void run() {
                         try {
                             Log.d(mHomeActivityPresenter, "Response: "+creditlist.size());
-                            view.updateCreditAmount(
-                                    new CreditCalculation().getTotalCreditAmount(creditlist));
+                            if(type.equals("I owe this business, supplier or person money (Payable).")){
+                                view.updatePayableCreditAmount(
+                                        new CreditCalculation().getTotalCreditAmount(creditlist));
+                            }
+                            if(type.equals("This business or person owes me or my business money (Receivable).")){
+                                view.updateReceivableCreditAmount(
+                                        new CreditCalculation().getTotalCreditAmount(creditlist));
+                            }
                         }catch(Exception e){
                             Log.d(mHomeActivityPresenter, "Error: "+e.getMessage());
                             view.updateOverallNetIncome(0.0);

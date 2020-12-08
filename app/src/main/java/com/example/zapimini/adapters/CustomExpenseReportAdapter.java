@@ -45,8 +45,9 @@ public class CustomExpenseReportAdapter extends
     @Override
     public void onBindViewHolder(@NonNull CustomExpenseReportAdapter.ViewHolder holder, int position) {
         Expense expense = expenselist.get(position);
-        String dateWithoutTime = new DateTimeUtils().removeTimeInDateTime(expense.getDateTime());
-        expense.setDateTime(dateWithoutTime);
+        // String dateWithoutTime = new DateTimeUtils().removeTimeInDateTime(expense.getDateTime());
+        String dateWithTime = expense.getDateTime();
+        expense.setDateTime(dateWithTime);
         holder.binding.setExpense(expense);
         holder.binding.amount.setText(new MoneyUtils().AddMoneyFormat(expense.getAmount()));
         if(expense.getCreditId() > 0){
