@@ -63,7 +63,8 @@ public class CreditItemReportActivity extends AppCompatActivity
                 Double.parseDouble(creditDataList.get(6)),
                 Double.parseDouble(creditDataList.get(7)),
                 creditDataList.get(8),
-                creditDataList.get(9)
+                creditDataList.get(9),
+                creditDataList.get(10)
         );
         loadCreditToFields(importedCredit);
 
@@ -101,6 +102,7 @@ public class CreditItemReportActivity extends AppCompatActivity
                 importedCredit.getPaidAmount(),
                 balance,
                 importedCredit.getType(),
+                importedCredit.getCreditStatus(),
                 importedCredit.getDateTime()
         );
 

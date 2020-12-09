@@ -18,7 +18,12 @@ public interface CreditRepository {
 
     public void getCreditByUserIdByType(int userId, String type, OnFinishedListerner onFinishedListerner);
 
-    public void getCreditByUserIdByTypeByDate(int userId, String type, String date, OnFinishedListerner onFinishedListerner);
+    public void getCreditByUserIdByTypeByDate(int userId, String type, String date,
+                                              OnFinishedListerner onFinishedListerner);
+
+    public void getCreditByUserIdByTypeByCreditPaidStatus(int userId, String type,
+                                                          String paidCreditStatus,
+                                              OnFinishedListerner onFinishedListerner);
 
     public void updateCredit(Credit credit, OnFinishedListerner onFinishedListerner);
 

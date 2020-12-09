@@ -55,7 +55,7 @@ public class CreditsReportActivity extends AppCompatActivity
 
     CreditReportActivityPresenter presenter;
 
-    String selectedDate;
+    String selectedDate = "";
 
     Intent intent;
 
@@ -87,15 +87,11 @@ public class CreditsReportActivity extends AppCompatActivity
         CreditLocalDb creditLocalDb = new CreditLocalDb(this);
         presenter = new CreditReportActivityPresenter(creditLocalDb,this);
 
-        selectedDate = "";
-        if(getIntent().getStringExtra("date") == null){
-            reportByFilter("all", "");
-        }
-        if(getIntent().getStringExtra("date") != null){
-            selectedDate = getIntent().getStringExtra("date");
-            Log.d(mCreditReportActivity, "Date: "+selectedDate);
-            reportByFilter("date", selectedDate);
-        }
+        filterReport(
+                getIntent().getStringExtra("date"),
+                getIntent().getStringExtra("paidcreditstatus"),
+                Boolean.parseBoolean(getIntent().getStringExtra("date"))
+        );
     }
 
     @Override
@@ -114,26 +110,17 @@ public class CreditsReportActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         switch(id){
+            case R.id.unpaid:
+                filterActivityData("none", "Unpaid", false);
+                break;
             case R.id.all:
-                intent = new Intent(
-                        CreditsReportActivity.this, CreditsReportActivity.class);
-                intent.putExtra("all", "");
-                startActivity(intent);
-                finish();
+                filterActivityData("none", "none", true);
                 break;
             case R.id.today:
-                intent = new Intent(
-                        CreditsReportActivity.this, CreditsReportActivity.class);
-                intent.putExtra("date", new DateTimeUtils().getTodayDate());
-                startActivity(intent);
-                finish();
+                filterActivityData(new DateTimeUtils().getTodayDate(), "none", false);
                 break;
             case R.id.yesterday:
-                intent = new Intent(
-                        CreditsReportActivity.this, CreditsReportActivity.class);
-                intent.putExtra("date", new DateTimeUtils().getYesterdayDate());
-                startActivity(intent);
-                finish();
+                filterActivityData(new DateTimeUtils().getYesterdayDate(), "none",false);
                 break;
             case R.id.pick_date:
                 DialogFragment newFragment = new DatePickerFragment(CreditsReportActivity.class);
@@ -171,11 +158,12 @@ public class CreditsReportActivity extends AppCompatActivity
     @Override
     public void displayCreditlist(String filter, List<Credit> creditlist) {
         creditlist2 = creditlist;
+        activityCreditReportBinding.pageTitle.setText(filter);
+
         if(creditlist.size() > 0){
             String amount = new MoneyUtils().AddMoneyFormat(
                     new CreditCalculation().getTotalCreditAmount(creditlist));
             toolbar.setTitle("Receivables: ("+creditlist.size()+ ")");
-            activityCreditReportBinding.pageTitle.setText(filter);
             activityCreditReportBinding.amountTv.setText(""+amount);
             activityCreditReportBinding.recyclerView.setHasFixedSize(true);
             // use a linear layout manager
@@ -194,13 +182,16 @@ public class CreditsReportActivity extends AppCompatActivity
     }
 
     @Override
-    public void reportByFilter(String filter, String date) {
+    public void reportByFilter(String filter, String date, String paidCreditStatus) {
         switch(filter){
             case "date":
                 presenter.getReceivableCreditByUserIdByTypeByDate(user.getId(), date);
                 break;
             case "all":
                 presenter.getReceivableCreditByUserIdByType(user.getId());
+                break;
+            case "paidcreditstatus":
+                presenter.getReceivableCreditByUserIdByTypeByCreditPaidStatus(user.getId(), paidCreditStatus);
                 break;
         }
     }
@@ -234,6 +225,7 @@ public class CreditsReportActivity extends AppCompatActivity
                 creditDataList.add(""+credit.getPaidAmount());
                 creditDataList.add(""+credit.getBalance());
                 creditDataList.add(credit.getType());
+                creditDataList.add(credit.getCreditStatus());
                 creditDataList.add(""+credit.getDateTime());
 
                 switch (which){
@@ -260,24 +252,39 @@ public class CreditsReportActivity extends AppCompatActivity
         builder.show();
     }
 
-    private void filterReport(String date, String paymentMode){
-
-        if(date != null && paymentMode != null){
-
-        }
-
-        reportByFilter("all", "");
-
-        if(date != null){
+    private void filterReport(String date, String paidCreditStatus, boolean all){
+        if(date == null || date.equals("none")){
+            if(paidCreditStatus == null || paidCreditStatus.equals("none")){
+                reportByFilter("all", date, paidCreditStatus);
+            }else{
+                String selectedPaidCreditStatus = getIntent().getStringExtra("paidcreditstatus");
+                Log.d(mCreditReportActivity, "paidCreditStatus: "+selectedPaidCreditStatus);
+                reportByFilter("paidcreditstatus", date, selectedPaidCreditStatus);
+            }
+        }else{
             selectedDate = getIntent().getStringExtra("date");
             Log.d(mCreditReportActivity, "Date: "+selectedDate);
-            reportByFilter("date", selectedDate);
+            reportByFilter("date", selectedDate, paidCreditStatus);
         }
 
-        if(date != null && date != null){
-            selectedDate = getIntent().getStringExtra("date");
-            Log.d(mCreditReportActivity, "Date: "+selectedDate);
-            reportByFilter("date", selectedDate);
-        }
+//        if(all == true){
+//            reportByFilter("all", date, paidCreditStatus);
+//        }
+//        if((paidCreditStatus.equals("none") || paidCreditStatus == null) &&
+//                (date.equals("none") || date == null) &&
+//                all == false
+//        ){
+//            reportByFilter("all", date, paidCreditStatus);
+//        }
+    }
+
+    private void filterActivityData(String date, String paidCreditStatus, boolean all){
+        intent = new Intent(
+                CreditsReportActivity.this, CreditsReportActivity.class);
+        intent.putExtra("paidcreditstatus", paidCreditStatus);
+        intent.putExtra("date", date);
+        intent.putExtra("all", all);
+        startActivity(intent);
+        finish();
     }
 }

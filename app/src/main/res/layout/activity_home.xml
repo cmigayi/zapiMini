@@ -26,15 +26,31 @@
                     android:id="@+id/linear_layout_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
+                    android:padding="7dp"
                     android:orientation="horizontal"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
+<!--                    <ImageView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:src="@drawable/icon_not_renewed_home_alert"/>                   -->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/storage_renewal_status_tv"-->
+<!--                        android:visibility="visible"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginLeft="5dp"-->
+<!--                        android:text="Your data is not safe-guarded. Makes sure you renew soon!"-->
+<!--                        android:textColor="#c02421"-->
+<!--                        android:textStyle="bold"-->
+<!--                        android:textSize="16sp"/>-->
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/icon_not_renewed_home_alert"/>
+                        android:src="@drawable/icon_renewed_home"/>
 
                     <TextView
                         android:id="@+id/storage_renewal_status_tv"
@@ -42,10 +58,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text="Your data is not safe-guarded. Makes sure you renew soon!"
-                        android:textColor="#c02421"
+                        android:text="Your data is safe."
+                        android:textColor="@color/greenColor"
                         android:textStyle="bold"
-                        android:textSize="15sp"/>
+                        android:textSize="16sp"/>
 
                 </LinearLayout>
 
@@ -295,7 +311,7 @@
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_button"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="13dp"
                     android:padding="10dp"
                     android:text="Cash up"
                     android:textSize="17sp"

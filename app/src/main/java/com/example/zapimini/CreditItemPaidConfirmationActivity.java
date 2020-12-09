@@ -90,7 +90,7 @@ public class CreditItemPaidConfirmationActivity extends AppCompatActivity
                 creditDataList.get(4)+", Amount: "+
                 amount +", Bal: "+
                 balance +", Date: "+
-                creditDataList.get(9)
+                creditDataList.get(10)
         );
 
         activityCreditItemPaidConfirmationBinding.cancelBtn.setOnClickListener(this);
@@ -214,7 +214,12 @@ public class CreditItemPaidConfirmationActivity extends AppCompatActivity
             credit.setPaidAmount(newPaidAmount);
             credit.setBalance(newBalance);
             credit.setType(creditDataList.get(8));
-            credit.setDateTime(creditDataList.get(9));
+            if(newBalance == 0){
+                credit.setCreditStatus("Fully paid");
+            }else{
+                credit.setCreditStatus("Partially paid");
+            }
+            credit.setDateTime(creditDataList.get(10));
 
             // CashUp
             CashUp cashUp = new CashUp();

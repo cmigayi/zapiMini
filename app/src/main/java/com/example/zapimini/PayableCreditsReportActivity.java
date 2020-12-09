@@ -88,11 +88,11 @@ public class PayableCreditsReportActivity extends AppCompatActivity
         type = getIntent().getStringExtra("type");
         selectedDate = "";
         if(getIntent().getStringExtra("date") == null){
-            reportByFilter("all", "");
+            reportByFilter("all", "", "");
         }else{
             selectedDate = getIntent().getStringExtra("date");
             Log.d(mCreditReportActivity, "Date: "+selectedDate);
-            reportByFilter("date", selectedDate);
+            reportByFilter("date", selectedDate, "");
         }
     }
 
@@ -193,7 +193,7 @@ public class PayableCreditsReportActivity extends AppCompatActivity
     }
 
     @Override
-    public void reportByFilter(String filter, String date) {
+    public void reportByFilter(String filter, String date, String paidCreditStatus) {
         switch(filter){
             case "date":
                 presenter.getPayableCreditByUserIdByTypeByDate(user.getId(), date);
@@ -232,6 +232,7 @@ public class PayableCreditsReportActivity extends AppCompatActivity
                 creditDataList.add(""+credit.getPaidAmount());
                 creditDataList.add(""+credit.getBalance());
                 creditDataList.add(credit.getType());
+                creditDataList.add(credit.getCreditStatus());
                 creditDataList.add(""+credit.getDateTime());
 
                 switch (which){

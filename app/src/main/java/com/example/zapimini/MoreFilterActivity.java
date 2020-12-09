@@ -4,8 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,16 +11,9 @@ import android.view.View;
 import android.widget.RadioButton;
 
 import com.example.zapimini.commons.DatePickerFragment;
-import com.example.zapimini.commons.DateTimeUtils;
-import com.example.zapimini.data.CashUp;
 import com.example.zapimini.data.User;
-import com.example.zapimini.databinding.ActivityCashUpsReportBinding;
 import com.example.zapimini.databinding.ActivityMoreFilterBinding;
 import com.example.zapimini.localStorage.UserLocalStorage;
-import com.example.zapimini.presenters.CashUpsReportActivityPresenter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MoreFilterActivity extends AppCompatActivity implements View.OnClickListener {
     final static String mMoreFilterActivity = "MoreFilterActivity";
@@ -57,6 +48,7 @@ public class MoreFilterActivity extends AppCompatActivity implements View.OnClic
         activityMoreFilterBinding.submitBtn.setOnClickListener(this);
         activityMoreFilterBinding.cancelBtn.setOnClickListener(this);
         activityMoreFilterBinding.datePickerBtn.setOnClickListener(this);
+        activityMoreFilterBinding.dateRangePickerBtn.setOnClickListener(this);
     }
 
     @Override
@@ -87,6 +79,9 @@ public class MoreFilterActivity extends AppCompatActivity implements View.OnClic
                 DialogFragment newFragment = new DatePickerFragment(MoreFilterActivity.class);
                 newFragment.show(getSupportFragmentManager(), "datePicker");
                 break;
+            case R.id.date_range_picker_btn:
+                setupRangePickerDialog();
+                break;
             case R.id.cancel_btn:
                 intent = new Intent(
                         MoreFilterActivity.this, CashUpsReportActivity.class);
@@ -95,4 +90,9 @@ public class MoreFilterActivity extends AppCompatActivity implements View.OnClic
                 break;
         }
     }
+
+    private void setupRangePickerDialog() {
+
+    }
+
 }

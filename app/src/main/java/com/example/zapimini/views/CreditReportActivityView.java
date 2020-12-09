@@ -11,6 +11,6 @@ public interface CreditReportActivityView {
     public ProgressBar getProgressbar();
     public void authUser(UserLocalStorage userLocalStorage);
     public void displayCreditlist(String filter, List<Credit> creditlist);
-    public void reportByFilter(String filter, String date);
+    public void reportByFilter(String filter, String date, String paidCreditStatus);
     public void displayError(String message);
 }

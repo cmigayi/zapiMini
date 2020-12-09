@@ -2,6 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item android:id="@+id/unpaid" android:title="Unpaid" app:showAsAction="never"/>
     <item android:id="@+id/all" android:title="All" app:showAsAction="never"/>
     <item android:id="@+id/today" android:title="Today" app:showAsAction="never"/>
     <item android:id="@+id/yesterday" android:title="Yesterday" app:showAsAction="never"/>

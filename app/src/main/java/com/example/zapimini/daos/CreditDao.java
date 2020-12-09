@@ -33,4 +33,10 @@ public interface CreditDao {
 
     @Query("select * from credits where user_id = :userId and type = :type and date_time between :dateFrom and :dateTo order by id desc")
     public List<Credit> getCreditsByUserIdByTypeByDate(int userId, String type, String dateFrom, String dateTo);
+
+    @Query("select * from credits where user_id = :userId and type = :type and credit_status = :creditStatus order by id desc")
+    public List<Credit> getCreditsByUserIdByTypeByCreditStatus(int userId, String type, String creditStatus);
+
+    @Query("select * from credits where user_id = :userId and type = :type and credit_status = :creditStatus and date_time between :dateFrom and :dateTo order by id desc")
+    public List<Credit> getCreditsByUserIdByTypeByCreditStatusByDate(int userId, String type, String creditStatus, String dateFrom, String dateTo);
 }

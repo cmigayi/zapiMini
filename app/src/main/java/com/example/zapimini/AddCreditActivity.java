@@ -130,6 +130,7 @@ public class AddCreditActivity extends AppCompatActivity
                             0.0,
                             balance,
                             selectedCreditOption(activityAddCreditBinding.creditOptions),
+                            "Unpaid",
                             new DateTimeUtils().getTodayDateTime()
                     );
                     presenter.createCredit(credit);

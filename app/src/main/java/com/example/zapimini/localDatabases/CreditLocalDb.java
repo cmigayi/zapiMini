@@ -72,6 +72,22 @@ public class CreditLocalDb implements CreditRepository {
     }
 
     @Override
+    public void getCreditByUserIdByTypeByCreditPaidStatus(int userId, String type, String paidCreditStatus, OnFinishedListerner onFinishedListerner) {
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    List<Credit> expenseList = creditDaoDatabase.creditDao()
+                            .getCreditsByUserIdByTypeByCreditStatus(userId, type, paidCreditStatus);
+                    onFinishedListerner.onFinished(expenseList);
+                }catch(Exception e){
+                    onFinishedListerner.onFailuire(e);
+                }
+            }
+        });
+    }
+
+    @Override
     public void updateCredit(Credit credit, OnFinishedListerner onFinishedListerner) {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override

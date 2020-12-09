@@ -72,28 +72,6 @@ public class CreditItemPaidConfirmationActivityPresenter {
         });
     }
 
-    public void clearPayable(Credit credit, Expense expense, Income income){
-        // 1. Add to expense
-        // 2. Subtract from income
-        // 3. update credit to paid
-        repository.updateCredit(credit, new CreditRepository.OnFinishedListerner() {
-            @Override
-            public void onFinished(List<Credit> creditlist) {
-
-            }
-
-            @Override
-            public void onFinished(Object response) {
-                createExpense(credit, expense, income);
-            }
-
-            @Override
-            public void onFailuire(Throwable t) {
-
-            }
-        });
-    }
-
     private void createExpense(Credit credit, Expense expense, Income income){
         expenseRepository.createExpense(expense, new ExpenseRepository.OnFinishedListerner() {
             @Override

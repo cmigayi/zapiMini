@@ -209,7 +209,8 @@ public class PayableCreditItemPaidConfirmationActivity extends AppCompatActivity
             credit.setPaidAmount(newPaidAmount);
             credit.setBalance(newBalance);
             credit.setType(creditDataList.get(8));
-            credit.setDateTime(creditDataList.get(9));
+            credit.setCreditStatus(creditDataList.get(9));
+            credit.setDateTime(creditDataList.get(10));
 
             // CashUp
             CashUp cashUp = new CashUp();

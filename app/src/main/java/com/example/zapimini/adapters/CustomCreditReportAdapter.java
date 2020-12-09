@@ -57,6 +57,7 @@ public class CustomCreditReportAdapter extends
         holder.binding.balance.setText("Bal: "+new MoneyUtils().AddMoneyFormat(credit.getBalance()));
         if(balance == 0.0){
             holder.binding.fullyPaidTv.setVisibility(View.VISIBLE);
+            holder.binding.topFullyPaidTv.setVisibility(View.VISIBLE);
         }
     }
 

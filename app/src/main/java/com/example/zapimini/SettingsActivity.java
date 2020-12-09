@@ -55,6 +55,7 @@ public class SettingsActivity extends AppCompatActivity
 
         activitySettingsBinding.backUpBtn.setOnClickListener(this);
         activitySettingsBinding.restoreBtn.setOnClickListener(this);
+        activitySettingsBinding.renewBtn.setOnClickListener(this);
     }
 
     @Override
@@ -82,6 +83,10 @@ public class SettingsActivity extends AppCompatActivity
                 break;
             case R.id.restore_btn:
 
+                break;
+            case R.id.renew_btn:
+                intent = new Intent(SettingsActivity.this, RenewStorageActivity.class);
+                startActivity(intent);
                 break;
         }
     }

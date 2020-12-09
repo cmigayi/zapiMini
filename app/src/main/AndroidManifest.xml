@@ -13,11 +13,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PayableCreditItemPaidConfirmationActivity"
+        <activity android:name=".RenewStorageActivity"
             android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".PayableCreditItemPaidConfirmationActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".MoreFilterActivity" />
         <activity android:name=".PayableCreditsReportActivity" />
-        <activity android:name=".CreditItemPaidConfirmationActivity"
+        <activity
+            android:name=".CreditItemPaidConfirmationActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".CashUpItemReportConfirmationActivity" />
         <activity android:name=".CashUpItemReportActivity" />
@@ -27,7 +31,8 @@
         <activity android:name=".CreditItemReportActivity" />
         <activity android:name=".CreditsReportActivity" />
         <activity android:name=".AddCreditConfirmationActivity" />
-        <activity android:name=".AddCreditActivity"
+        <activity
+            android:name=".AddCreditActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".ProfileActivity" />
         <activity
@@ -47,7 +52,8 @@
         <activity android:name=".ConfirmationActivity" />
         <activity android:name=".IncomeConfirmationActivity" />
         <activity android:name=".IncomeReportActivity" />
-        <activity android:name=".CashUpActivity" />
+        <activity android:name=".CashUpActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".CreateBusinessActivity" />
         <activity android:name=".CreateAccountActivity" />
         <activity android:name=".LoginActivity" />

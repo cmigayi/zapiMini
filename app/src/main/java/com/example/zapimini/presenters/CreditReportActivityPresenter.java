@@ -87,4 +87,38 @@ public class CreditReportActivityPresenter {
         });
     }
 
+    public void getReceivableCreditByUserIdByTypeByCreditPaidStatus(int userId, String paidCreditStatus){
+        repository.getCreditByUserIdByTypeByCreditPaidStatus(userId,
+                "This business or person owes me or my business money (Receivable).",
+                paidCreditStatus,
+                new CreditRepository.OnFinishedListerner() {
+                    @Override
+                    public void onFinished(List<Credit> creditlist) {
+                        AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    Log.d(mCreditReportActivityPresenter, "creditlist: "+creditlist);
+                                    view.displayCreditlist(paidCreditStatus, creditlist);
+                                }catch(Exception e){
+                                    Log.d(mCreditReportActivityPresenter, "Error: "+e.getMessage());
+                                    view.displayError("There was a problem. Please try again!");
+                                }
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFinished(Object response) {
+
+                    }
+
+                    @Override
+                    public void onFailuire(Throwable t) {
+                        Log.d(mCreditReportActivityPresenter, "error: "+t.getMessage());
+                        view.displayError("There was a problem. Please try again!");
+                    }
+                });
+    }
+
 }
